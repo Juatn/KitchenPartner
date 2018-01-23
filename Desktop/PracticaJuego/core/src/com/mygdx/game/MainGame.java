@@ -20,7 +20,6 @@ public class MainGame extends Game {
         manager=new AssetManager();
         manager.load("gatoo.png",Texture.class);
         manager.load("queso.png",Texture.class);
-        manager.load("maullido.png",Texture.class);
         manager.load("ratacartoon.png",Texture.class);
 
         // Se va a cargar de forma sincrona (Syncronized)
