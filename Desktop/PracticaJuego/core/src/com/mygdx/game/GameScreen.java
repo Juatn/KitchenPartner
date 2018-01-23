@@ -9,6 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Entidades.Grisacius;
+import com.mygdx.game.Entidades.RataNormal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by juana on 23/01/2018.
@@ -18,6 +22,7 @@ public class GameScreen extends BaseScreen {
     private Stage stage;
     private World world;
     private Grisacius grisacius;
+    private List<RataNormal>listaRatas=new ArrayList<RataNormal>();
 
 
     public GameScreen(MainGame game) {
@@ -28,7 +33,7 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void show() {
-       Texture texturaGrisacius=game.getManager().get("gato.png");
+       Texture texturaGrisacius=game.getManager().get("gatoo.png");
         grisacius=new Grisacius(world, texturaGrisacius,new Vector2(1,2));
         stage.addActor(grisacius);
     }

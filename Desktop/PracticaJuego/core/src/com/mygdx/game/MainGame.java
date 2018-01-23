@@ -18,7 +18,10 @@ public class MainGame extends Game {
     @Override
     public void create() {
         manager=new AssetManager();
-        manager.load("gato.png",Texture.class);
+        manager.load("gatoo.png",Texture.class);
+        manager.load("queso.png",Texture.class);
+        manager.load("maullido.png",Texture.class);
+        manager.load("ratacartoon.png",Texture.class);
 
         // Se va a cargar de forma sincrona (Syncronized)
         manager.finishLoading();
