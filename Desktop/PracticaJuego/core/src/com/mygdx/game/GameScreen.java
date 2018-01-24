@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -32,11 +33,13 @@ public class GameScreen extends BaseScreen {
     private Grisacius grisacius;
     private List<RataNormal>listaRatas=new ArrayList<RataNormal>();
     private List<Queso>listaQuesos=new ArrayList<Queso>();
+    private Music bgMusic;
 
 
 
     public GameScreen(MainGame game) {
         super(game);
+        bgMusic=game.getManager().get("spazzmatica.ogg");
         stage=new Stage(new FitViewport(1280f,720f));
         world=new World(new Vector2(0,0),true);
         world.setContactListener(new ContactListener() {
@@ -107,6 +110,8 @@ public class GameScreen extends BaseScreen {
         for(Queso x:listaQuesos){
             stage.addActor(x);
         }
+        bgMusic.setVolume(0.75f);
+        bgMusic.play();
 
     }
 
@@ -122,6 +127,7 @@ public class GameScreen extends BaseScreen {
             x.desacoplar();
             x.remove();
         }
+        bgMusic.stop();
     }
 
     @Override

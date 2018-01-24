@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,7 @@ public class MainGame extends Game {
         manager.load("queso.png",Texture.class);
         manager.load("ratacartoon1.png", Texture.class);
         manager.load("maullido.png",Texture.class);
+        manager.load("spazzmatica.ogg", Music.class);
 
         // Se va a cargar de forma sincrona (Syncronized)
         manager.finishLoading();

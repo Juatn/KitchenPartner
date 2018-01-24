@@ -42,7 +42,7 @@ public class Grisacius  extends Actor{
         fixture.setUserData("Grisacius");
         circulo.dispose();
 
-        setSize(180,140);
+        setSize(PIXELS_IN_METERS,PIXELS_IN_METERS);
 
     }
 
