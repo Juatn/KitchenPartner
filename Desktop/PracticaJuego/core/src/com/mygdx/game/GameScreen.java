@@ -145,12 +145,12 @@ public class GameScreen extends BaseScreen {
 
             nuevo.setPosition(grisacius.getX(),grisacius.getY());
             stage.addActor(nuevo);
-            System.out.print("disparo");
+
 
             // NO FUNCIONA
-            if(nuevo.getX()> 1280){
+            if(nuevo.eliminar){
                 nuevo.remove();
-                System.out.print("Maullido eliminado");
+                System.out.print("eliminado");
 
             }
 

@@ -20,8 +20,8 @@ import static com.mygdx.game.Constantes.PIXELS_IN_METERS;
 //
 
 public class Maullido extends Actor {
+
     protected Texture texturamaullido;
-    protected Boolean disparo;
     public static int VELOCIDAD=500;
     public boolean eliminar=false;
 
@@ -36,7 +36,7 @@ public class Maullido extends Actor {
     public void act(float delta) {
         setX(getX()+VELOCIDAD*delta);
 
-        if(getX()< Gdx.graphics.getHeight()){
+        if(this.getX()>14){
             this.eliminar=true;
         }
     }
