@@ -55,4 +55,8 @@ public class Queso extends Actor {
         body.destroyFixture(fixture);
         world.destroyBody(body);
     }
+
+    public void setComido(boolean comido) {
+        this.comido = comido;
+    }
 }

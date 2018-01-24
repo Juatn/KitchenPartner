@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Constantes;
 
+import java.util.ArrayList;
+
 import static com.mygdx.game.Constantes.PIXELS_IN_METERS;
 
 /**
@@ -24,7 +26,9 @@ public class Grisacius  extends Actor{
     private World world;
     private Body body;
     private Fixture fixture;
+    private ArrayList<Maullido>listamaullidos;
     private boolean vivo;
+
 
     public Grisacius(World world, Texture texture,Vector2 position){
         this.world=world;
@@ -45,6 +49,7 @@ public class Grisacius  extends Actor{
         setSize(PIXELS_IN_METERS,PIXELS_IN_METERS);
 
     }
+
 
     @Override
     public void act(float delta) {

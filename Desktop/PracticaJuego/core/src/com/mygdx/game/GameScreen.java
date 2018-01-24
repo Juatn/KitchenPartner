@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Entidades.Grisacius;
+import com.mygdx.game.Entidades.Maullido;
 import com.mygdx.game.Entidades.Queso;
 import com.mygdx.game.Entidades.RataNormal;
 
@@ -34,6 +36,8 @@ public class GameScreen extends BaseScreen {
     private List<RataNormal>listaRatas=new ArrayList<RataNormal>();
     private List<Queso>listaQuesos=new ArrayList<Queso>();
     private Music bgMusic;
+    private ArrayList<Maullido>maullidos;
+
 
 
 
@@ -53,8 +57,11 @@ public class GameScreen extends BaseScreen {
                 if(chocado(contact,"Rata","Queso")){
                     grisacius.setVivo(false);
 
+
                 }
                 if(chocado(contact,"Maullido","Rata")){
+
+
 
                 }
 
@@ -80,7 +87,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void show() {
         //Pedimos las texturas al Asset manager
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
        Texture texturaGrisacius=game.getManager().get("gatoo1.png");
        Texture quesotexture=game.getManager().get("queso.png");
@@ -132,9 +139,28 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
+
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            Maullido nuevo=new Maullido(new Texture("maullido.png"));
+
+            nuevo.setPosition(grisacius.getX(),grisacius.getY());
+            stage.addActor(nuevo);
+            System.out.print("disparo");
+
+            // NO FUNCIONA
+            if(nuevo.getX()> 1280){
+                nuevo.remove();
+                System.out.print("Maullido eliminado");
+
+            }
+
+        }
+
         Gdx.gl20.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         stage.act();
+
         world.step(delta,6,2);
         stage.draw();
     }
