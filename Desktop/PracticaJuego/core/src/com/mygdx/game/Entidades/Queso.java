@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -33,10 +34,11 @@ public class Queso extends Actor {
         def.type= BodyDef.BodyType.StaticBody;
         body=world.createBody(def);
         //Definimos la fixture
-        CircleShape circulo =new CircleShape();
-        circulo.setRadius(0.3f);
-        fixture=body.createFixture(circulo, 1);
-        circulo.dispose();
+        PolygonShape box =new PolygonShape();
+        box.setAsBox(1.5f,1.5f);
+        fixture=body.createFixture(box, 1);
+        fixture.setUserData("Queso");
+        box.dispose();
 
         setSize(PIXELS_IN_METERS,PIXELS_IN_METERS);
 

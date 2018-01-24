@@ -6,6 +6,6 @@ package com.mygdx.game;
 
 public class Constantes {
 
-    public static final float PIXELS_IN_METERS=270f;
+    public static final float PIXELS_IN_METERS=100f;
 
 }

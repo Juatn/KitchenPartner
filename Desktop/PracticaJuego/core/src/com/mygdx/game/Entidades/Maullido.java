@@ -37,8 +37,9 @@ public class Maullido extends Actor {
         body=world.createBody(def);
         //Definimos la fixture
         CircleShape circulo =new CircleShape();
-        circulo.setRadius(0.1f);
+        circulo.setRadius(0.01f);
         fixture=body.createFixture(circulo, 1);
+        fixture.setUserData("Maullido");
         circulo.dispose();
 
         setSize(PIXELS_IN_METERS,PIXELS_IN_METERS);

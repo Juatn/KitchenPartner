@@ -7,6 +7,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
+import java.awt.font.ImageGraphicAttribute;
 
 public class MainGame extends Game {
     private AssetManager manager;
@@ -18,9 +21,10 @@ public class MainGame extends Game {
     @Override
     public void create() {
         manager=new AssetManager();
-        manager.load("gatoo.png",Texture.class);
+        manager.load("gatoo1.png",Texture.class);
         manager.load("queso.png",Texture.class);
-        manager.load("ratacartoon.png",Texture.class);
+        manager.load("ratacartoon1.png", Texture.class);
+        manager.load("maullido.png",Texture.class);
 
         // Se va a cargar de forma sincrona (Syncronized)
         manager.finishLoading();

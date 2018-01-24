@@ -38,9 +38,10 @@ public class RataNormal extends Actor {
         CircleShape circulo =new CircleShape();
         circulo.setRadius(0.3f);
         fixture=body.createFixture(circulo, 1);
+        fixture.setUserData("Rata");
         circulo.dispose();
 
-        setSize(PIXELS_IN_METERS,PIXELS_IN_METERS);
+        setSize(50,50);
 
     }
 

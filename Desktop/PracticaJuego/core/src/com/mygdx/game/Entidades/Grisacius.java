@@ -1,7 +1,9 @@
 package com.mygdx.game.Entidades;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -37,11 +39,35 @@ public class Grisacius  extends Actor{
         CircleShape circulo =new CircleShape();
         circulo.setRadius(0.5f);
         fixture=body.createFixture(circulo, 1);
+        fixture.setUserData("Grisacius");
         circulo.dispose();
 
-        setSize(PIXELS_IN_METERS,PIXELS_IN_METERS);
+        setSize(180,140);
 
     }
+
+    @Override
+    public void act(float delta) {
+
+            mouseMoved();
+
+    }
+    public void mouseMoved() {
+        if(Gdx.input.isTouched()) { // Detecta el dedo en la pantalla
+
+            int y = Gdx.input.getY(); // coge las coordenadas de Y que se este pulsando
+
+            if(y < Gdx.graphics.getWidth()/2) { //  ==> mueve hacia atras
+                body.setLinearVelocity(0,10);
+            }else if(y >= Gdx.graphics.getHeight() /2) { //  ==> mueve hacia delante
+                body.setLinearVelocity(0,-10);
+            }
+        }else { // no hay dedo en la pantalla
+            body.setLinearVelocity(0,0); // ==> No se puede
+        }
+    }
+
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -53,5 +79,9 @@ public class Grisacius  extends Actor{
     public void desacoplar(){
         body.destroyFixture(fixture);
         world.destroyBody(body);
+    }
+
+    public void setVivo(boolean vivo) {
+        this.vivo = vivo;
     }
 }
