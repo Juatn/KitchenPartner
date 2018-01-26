@@ -36,7 +36,7 @@ public class Maullido extends Actor {
     public void act(float delta) {
         setX(getX()+VELOCIDAD*delta);
 
-        if(this.getX()>14){
+        if(this.getY()>Gdx.graphics.getHeight()){
             this.eliminar=true;
         }
     }

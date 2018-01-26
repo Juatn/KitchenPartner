@@ -140,15 +140,16 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+        if(Gdx.input.isTouched()){
             Maullido nuevo=new Maullido(new Texture("maullido.png"));
 
             nuevo.setPosition(grisacius.getX(),grisacius.getY());
+
             stage.addActor(nuevo);
 
 
             // NO FUNCIONA
-            if(nuevo.eliminar){
+            if(nuevo.getY()>Gdx.graphics.getWidth()){
                 nuevo.remove();
                 System.out.print("eliminado");
 
