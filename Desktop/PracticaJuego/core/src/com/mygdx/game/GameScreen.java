@@ -30,6 +30,12 @@ import jdk.nashorn.internal.runtime.Debug;
  */
 
 public class GameScreen extends BaseScreen {
+
+    // constante que define el "alto" de nuestra pantalla.
+    public static final float HEIGHT=7.2f;
+    // constante que define el "ancho" de nuestra pantalla.
+    public static final float WIDTH=12.8f;
+
     private Stage stage;
     private World world;
     private Grisacius grisacius;
@@ -46,42 +52,7 @@ public class GameScreen extends BaseScreen {
         bgMusic=game.getManager().get("spazzmatica.ogg");
         stage=new Stage(new FitViewport(1280f,720f));
         world=new World(new Vector2(0,0),true);
-        world.setContactListener(new ContactListener() {
-            private Boolean chocado(Contact contact,Object userA,Object userB){
-                return contact.getFixtureA().getUserData().equals(userA)&&contact.getFixtureB().getUserData().equals(userB)||
-                        contact.getFixtureA().getUserData().equals(userB)&&contact.getFixtureB().getUserData().equals(userA);
 
-            }
-            @Override
-            public void beginContact(Contact contact) {
-                if(chocado(contact,"Rata","Queso")){
-                    grisacius.setVivo(false);
-
-
-                }
-                if(chocado(contact,"Maullido","Rata")){
-
-
-
-                }
-
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-
-            }
-        });
     }
 
     @Override
@@ -105,10 +76,10 @@ public class GameScreen extends BaseScreen {
         listaQuesos.add(new Queso(world,quesotexture,new Vector2(0.8f,0.5f)));
 
 
-        listaRatas.add(new RataNormal(world,texturarata,new Vector2(12,6)));
-        listaRatas.add(new RataNormal(world,texturarata,new Vector2(12,4)));
-        listaRatas.add(new RataNormal(world,texturarata,new Vector2(12,1)));
-        listaRatas.add(new RataNormal(world,texturarata,new Vector2(12,2.5f)));
+        listaRatas.add(new RataNormal(world,texturarata,2.5f));
+        listaRatas.add(new RataNormal(world,texturarata,1f));
+        listaRatas.add(new RataNormal(world,texturarata,4f));
+        listaRatas.add(new RataNormal(world,texturarata,6f));
         stage.addActor(grisacius);
 
         for(RataNormal c:listaRatas){

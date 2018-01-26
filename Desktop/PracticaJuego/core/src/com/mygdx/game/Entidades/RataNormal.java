@@ -9,8 +9,11 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.GameScreen;
+import com.mygdx.game.Tools.Colision;
 
 import static com.mygdx.game.Constantes.PIXELS_IN_METERS;
+import static com.mygdx.game.GameScreen.*;
 
 /**
  * Created by juana on 23/01/2018.
@@ -22,16 +25,21 @@ public class RataNormal extends Actor {
     private World world;
     private Body body;
     private Fixture fixture;
+    public Colision colision;
     private boolean viva;
     protected int vida=100;
+    protected float x,y;
 
-    public RataNormal(World world, Texture texture,Vector2 position){
+    public RataNormal(World world, Texture texture,float y){
         this.world=world;
         this.texture=texture;
+        this.x= WIDTH;
+        this.y=y;
+
 
         //Definimos el cuerpo
         BodyDef def=new BodyDef();
-        def.position.set(position);
+        def.position.set(x,y);
         def.type= BodyDef.BodyType.DynamicBody;
         body=world.createBody(def);
         //Definimos la fixture
@@ -41,7 +49,9 @@ public class RataNormal extends Actor {
         fixture.setUserData("Rata");
         circulo.dispose();
 
-        setSize(50,50);
+
+        setSize(45,50);
+        this.colision=new Colision(x,y,WIDTH,HEIGHT);
 
     }
 
