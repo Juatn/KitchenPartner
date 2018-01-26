@@ -37,7 +37,7 @@ public class RataNormal extends Actor {
         this.y=y;
 
 
-        //Definimos el cuerpo
+        //Definimos el cuerpo.
         BodyDef def=new BodyDef();
         def.position.set(x,y);
         def.type= BodyDef.BodyType.DynamicBody;
