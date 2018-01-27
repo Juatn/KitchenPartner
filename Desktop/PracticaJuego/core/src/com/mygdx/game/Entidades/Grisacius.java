@@ -3,7 +3,6 @@ package com.mygdx.game.Entidades;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,10 +10,10 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.Constantes;
 
 import java.util.ArrayList;
 
+import static com.mygdx.game.Constantes.HEIGHT;
 import static com.mygdx.game.Constantes.PIXELS_IN_METERS;
 
 /**
@@ -27,7 +26,7 @@ public class Grisacius  extends Actor{
     public Body body;
     public Fixture fixture;
     private ArrayList<Maullido>listamaullidos;
-    private boolean vivo;
+    protected boolean vivo;
 
 
     public Grisacius(World world, Texture texture,Vector2 position){
@@ -50,6 +49,9 @@ public class Grisacius  extends Actor{
 
     }
 
+    public boolean isVivo(){
+        return this.vivo;
+    }
 
     @Override
     public void act(float delta) {
@@ -68,6 +70,9 @@ public class Grisacius  extends Actor{
             }else if(y >= Gdx.graphics.getHeight() /2) { //  ==> mueve hacia delante
                 body.setLinearVelocity(0,-10);
             }
+            else if(body.getPosition().y==HEIGHT){
+                body.setLinearVelocity(0,-2);
+                            }
         }else { // no hay dedo en la pantalla
             body.setLinearVelocity(0,0); // ==> No se puede
         }

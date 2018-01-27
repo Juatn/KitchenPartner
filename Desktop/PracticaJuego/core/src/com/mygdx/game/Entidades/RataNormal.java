@@ -61,7 +61,7 @@ public class RataNormal extends Actor {
     @Override
     public void act(float delta) {
 
-        body.setLinearVelocity(-1,0);
+        body.setLinearVelocity(-5,0);
         if (x < 0) {
             viva = false;
         }
@@ -82,6 +82,9 @@ public class RataNormal extends Actor {
     }
     public Colision getColision(){
         return this.colision;
+    }
+    public void eliminar(){
+        this.remove();
     }
 
 }

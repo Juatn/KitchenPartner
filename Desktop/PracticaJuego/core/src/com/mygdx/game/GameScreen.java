@@ -22,8 +22,13 @@ import com.mygdx.game.Entidades.RataNormal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import jdk.nashorn.internal.runtime.Debug;
+
+import static com.mygdx.game.Constantes.MAX_RATS_SPAWN_TIME;
+import static com.mygdx.game.Constantes.MIN_RATS_SPAWN_TIME;
+import static com.mygdx.game.Constantes.WIDTH;
 
 /**
  * Created by juana on 23/01/2018.
@@ -31,13 +36,7 @@ import jdk.nashorn.internal.runtime.Debug;
 
 public class GameScreen extends BaseScreen {
 
-    // constante que define el "alto" de nuestra pantalla.
 
-    // constante que define el "ancho" de nuestra pantalla.
-
-
-    public static final float MIN_RATAS_SPAWN_TIME = 0.02f;
-    public static final float MAX_RATAS_SPAWN_TIME = 0.05f;
 
     private Stage stage;
     private World world;
@@ -45,7 +44,9 @@ public class GameScreen extends BaseScreen {
     private List<RataNormal>listaRatas=new ArrayList<RataNormal>();
     private List<Queso>listaQuesos=new ArrayList<Queso>();
     private Music bgMusic;
-    private ArrayList<Maullido>maullidos;
+    private ArrayList<Maullido>maullidos=new ArrayList<Maullido>();
+    public Random random;
+    public float ratSpamTime;
 
 
 
@@ -57,6 +58,10 @@ public class GameScreen extends BaseScreen {
         bgMusic=game.getManager().get("spazzmatica.ogg");
         stage=new Stage(new FitViewport(1280f,720f));
         world=new World(new Vector2(0,0),true);
+
+        random = new Random();
+        ratSpamTime = random.nextFloat() * (MAX_RATS_SPAWN_TIME - MIN_RATS_SPAWN_TIME) + MIN_RATS_SPAWN_TIME;
+
 
     }
 
@@ -82,15 +87,10 @@ public class GameScreen extends BaseScreen {
         listaQuesos.add(new Queso(world,quesotexture,new Vector2(0.8f,0.5f)));
 
 
-        listaRatas.add(new RataNormal(world,texturarata,2.5f));
-        listaRatas.add(new RataNormal(world,texturarata,1f));
-        listaRatas.add(new RataNormal(world,texturarata,4f));
-        listaRatas.add(new RataNormal(world,texturarata,6f));
+
         stage.addActor(grisacius);
 
-        for(RataNormal c:listaRatas){
-            stage.addActor(c);
-        }
+
         for(Queso x:listaQuesos){
             stage.addActor(x);
         }
@@ -117,19 +117,40 @@ public class GameScreen extends BaseScreen {
     @Override
     public void render(float delta) {
 
+
+
+        //SPAWN RATAS
+        ratSpamTime -= delta;
+        if (ratSpamTime <= 0) {
+            ratSpamTime = random.nextFloat() * (MAX_RATS_SPAWN_TIME - MIN_RATS_SPAWN_TIME) + MIN_RATS_SPAWN_TIME;
+            listaRatas.add(new RataNormal(world,new Texture("ratacartoon1.png"),random.nextInt((int) (WIDTH-1))));
+            for (RataNormal c:listaRatas){
+                stage.addActor(c);
+            }
+        }
+
         if(Gdx.input.isTouched()){
             Maullido nuevo=new Maullido(this.world,new Texture("maullido.png"),grisacius);
-
-
-
-
-            stage.addActor(nuevo);
-
-
-
-
+            maullidos.add(nuevo);
+            for(Maullido maullido:maullidos) {
+                stage.addActor(maullido);
+            }
 
         }
+        if(!maullidos.isEmpty()) {
+            for (Maullido maullido : maullidos) {
+                for (RataNormal rata : listaRatas) {
+                    if (rata.getColision().collidesWith(maullido.getColision())) {
+
+                        //maullido.remove();
+                        //rata.remove();
+
+                    }
+                }
+            }
+        }
+
+
 
         Gdx.gl20.glClearColor(0.4f, 0.5f, 0.8f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

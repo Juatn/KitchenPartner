@@ -67,10 +67,9 @@ public class Maullido extends Actor {
     @Override
     public void act(float delta) {
 
-        body.setLinearVelocity(10,0);
+        body.setLinearVelocity(15,0);
         if (body.getPosition().x > WIDTH) {
-            System.out.print("Maullido eliminado"); // Prueba para comprobar que se elimina la textura
-            this.remove();
+             this.remove();
         }
 
         colision.move(x, y);
