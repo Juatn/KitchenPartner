@@ -30,6 +30,7 @@ public class RataNormal extends Actor {
     protected int vida=100;
     protected float x,y;
 
+
     public RataNormal(World world, Texture texture,float y){
         this.world=world;
         this.texture=texture;
@@ -56,6 +57,17 @@ public class RataNormal extends Actor {
     }
 
     @Override
+    public void act(float delta) {
+
+        body.setLinearVelocity(-1,0);
+        if (x < 0) {
+            viva = false;
+        }
+
+        colision.move(x, y);
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha) {
         setPosition((body.getPosition().x-0.5f)*PIXELS_IN_METERS,
                 (body.getPosition().y-0.5f)*PIXELS_IN_METERS);
@@ -66,4 +78,8 @@ public class RataNormal extends Actor {
         body.destroyFixture(fixture);
         world.destroyBody(body);
     }
+    public Colision getColision(){
+        return this.colision;
+    }
+
 }

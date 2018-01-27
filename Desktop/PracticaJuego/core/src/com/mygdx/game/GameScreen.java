@@ -36,6 +36,9 @@ public class GameScreen extends BaseScreen {
     // constante que define el "ancho" de nuestra pantalla.
     public static final float WIDTH=12.8f;
 
+    public static final float MIN_RATAS_SPAWN_TIME = 0.02f;
+    public static final float MAX_RATAS_SPAWN_TIME = 0.05f;
+
     private Stage stage;
     private World world;
     private Grisacius grisacius;
@@ -49,6 +52,7 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(MainGame game) {
         super(game);
+
         bgMusic=game.getManager().get("spazzmatica.ogg");
         stage=new Stage(new FitViewport(1280f,720f));
         world=new World(new Vector2(0,0),true);
@@ -64,6 +68,7 @@ public class GameScreen extends BaseScreen {
        Texture quesotexture=game.getManager().get("queso.png");
        Texture texturarata=game.getManager().get("ratacartoon1.png");
        Texture maullidotexture=game.getManager().get("maullido.png");
+
 
        //Instanciamos las clases
 
@@ -112,15 +117,16 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
 
         if(Gdx.input.isTouched()){
-            Maullido nuevo=new Maullido(new Texture("maullido.png"));
+            Maullido nuevo=new Maullido(this.world,new Texture("maullido.png"),grisacius);
 
-            nuevo.setPosition(grisacius.getX(),grisacius.getY());
+
+
 
             stage.addActor(nuevo);
 
 
             // NO FUNCIONA
-            if(nuevo.getY()>Gdx.graphics.getWidth()){
+            if(nuevo.getX()<0){
                 nuevo.remove();
                 System.out.print("eliminado");
 
