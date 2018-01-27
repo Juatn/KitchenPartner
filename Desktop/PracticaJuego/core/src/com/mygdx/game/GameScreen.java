@@ -126,11 +126,7 @@ public class GameScreen extends BaseScreen {
 
 
             // NO FUNCIONA
-            if(nuevo.getX()<0){
-                nuevo.remove();
-                System.out.print("eliminado");
 
-            }
 
         }
 

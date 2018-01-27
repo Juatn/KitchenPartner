@@ -24,8 +24,8 @@ import static com.mygdx.game.Constantes.PIXELS_IN_METERS;
 public class Grisacius  extends Actor{
     private Texture texture;
     private World world;
-    private Body body;
-    private Fixture fixture;
+    public Body body;
+    public Fixture fixture;
     private ArrayList<Maullido>listamaullidos;
     private boolean vivo;
 
@@ -64,6 +64,7 @@ public class Grisacius  extends Actor{
 
             if(y < Gdx.graphics.getWidth()/2) { //  ==> mueve hacia atras
                 body.setLinearVelocity(0,10);
+
             }else if(y >= Gdx.graphics.getHeight() /2) { //  ==> mueve hacia delante
                 body.setLinearVelocity(0,-10);
             }

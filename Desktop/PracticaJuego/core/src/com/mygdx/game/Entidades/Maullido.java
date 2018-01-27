@@ -30,7 +30,7 @@ public class Maullido extends Actor {
 
     private Texture texture;
     private World world;
-    private Body body;
+    public Body body;
     private Fixture fixture;
     public Colision colision;
     private boolean remove=false;
@@ -41,8 +41,8 @@ public class Maullido extends Actor {
     public Maullido(World world, Texture texture,Grisacius grisacius){
         this.world=world;
         this.texture=texture;
-        this.x= grisacius.getX()+0.5f;
-        this.y=grisacius.getY();
+        this.x=x+2.5f;
+        this.y=grisacius.body.getPosition().y;
 
 
         //Definimos el cuerpo.
@@ -58,7 +58,7 @@ public class Maullido extends Actor {
         circulo.dispose();
 
 
-        setSize(4,10);
+        setSize(10,20);
         this.colision=new Colision(x,y,WIDTH,HEIGHT);
 
     }
@@ -67,8 +67,9 @@ public class Maullido extends Actor {
     public void act(float delta) {
 
         body.setLinearVelocity(10,0);
-        if (x > WIDTH) {
-            remove = true;
+        if (body.getPosition().x > WIDTH) {
+            System.out.print("Maullido eliminado"); // Prueba para comprobar que se elimina la textura
+            this.remove();
         }
 
         colision.move(x, y);
@@ -81,10 +82,7 @@ public class Maullido extends Actor {
         batch.draw(texture,getX(),getY(),getWidth(),getHeight());
     }
 
-    public void desacoplar(){
-        body.destroyFixture(fixture);
-        world.destroyBody(body);
-    }
+
     public Colision getColision(){
         return this.colision;
     }
