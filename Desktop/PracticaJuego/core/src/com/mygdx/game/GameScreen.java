@@ -32,9 +32,9 @@ import jdk.nashorn.internal.runtime.Debug;
 public class GameScreen extends BaseScreen {
 
     // constante que define el "alto" de nuestra pantalla.
-    public static final float HEIGHT=7.2f;
+
     // constante que define el "ancho" de nuestra pantalla.
-    public static final float WIDTH=12.8f;
+
 
     public static final float MIN_RATAS_SPAWN_TIME = 0.02f;
     public static final float MAX_RATAS_SPAWN_TIME = 0.05f;
@@ -46,6 +46,7 @@ public class GameScreen extends BaseScreen {
     private List<Queso>listaQuesos=new ArrayList<Queso>();
     private Music bgMusic;
     private ArrayList<Maullido>maullidos;
+
 
 
 
@@ -125,7 +126,7 @@ public class GameScreen extends BaseScreen {
             stage.addActor(nuevo);
 
 
-            // NO FUNCIONA
+
 
 
         }

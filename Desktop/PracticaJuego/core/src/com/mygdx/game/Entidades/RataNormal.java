@@ -12,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.GameScreen;
 import com.mygdx.game.Tools.Colision;
 
+import static com.mygdx.game.Constantes.HEIGHT;
 import static com.mygdx.game.Constantes.PIXELS_IN_METERS;
+import static com.mygdx.game.Constantes.WIDTH;
 import static com.mygdx.game.GameScreen.*;
 
 /**

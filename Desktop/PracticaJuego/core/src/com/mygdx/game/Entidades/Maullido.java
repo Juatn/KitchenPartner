@@ -15,9 +15,10 @@ import com.mygdx.game.Tools.Colision;
 
 import java.util.ArrayList;
 
+import static com.mygdx.game.Constantes.HEIGHT;
 import static com.mygdx.game.Constantes.PIXELS_IN_METERS;
-import static com.mygdx.game.GameScreen.HEIGHT;
-import static com.mygdx.game.GameScreen.WIDTH;
+import static com.mygdx.game.Constantes.WIDTH;
+
 
 
 /**
