@@ -41,7 +41,7 @@ public class Maullido extends Actor {
     public Maullido(World world, Texture texture,Grisacius grisacius){
         this.world=world;
         this.texture=texture;
-        this.x=x+2.5f;
+        this.x=grisacius.body.getPosition().x+0.8f;
         this.y=grisacius.body.getPosition().y;
 
 
