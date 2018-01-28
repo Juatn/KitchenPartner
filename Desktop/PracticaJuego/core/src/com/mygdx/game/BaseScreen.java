@@ -10,9 +10,10 @@ public class BaseScreen implements Screen {
     protected MainGame game;
 
 
-    public BaseScreen(MainGame game){
-        this.game=game;
+    public BaseScreen(MainGame game) {
+        this.game = game;
     }
+
     @Override
     public void show() {
 

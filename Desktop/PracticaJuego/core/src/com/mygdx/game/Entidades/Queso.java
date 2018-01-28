@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -35,12 +34,12 @@ public class Queso extends Actor {
         body=world.createBody(def);
         //Definimos la fixture
         PolygonShape box =new PolygonShape();
-        box.setAsBox(1.5f,1.5f);
+        box.setAsBox(0.8f,0.8f);
         fixture=body.createFixture(box, 1);
         fixture.setUserData("Queso");
         box.dispose();
 
-        setSize(PIXELS_IN_METERS,PIXELS_IN_METERS);
+        setSize(70,80);
 
     }
 
