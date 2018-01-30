@@ -1,201 +1,216 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.Entidades.Grisacius;
-import com.mygdx.game.Entidades.Maullido;
-import com.mygdx.game.Entidades.Queso;
-import com.mygdx.game.Entidades.RataNormal;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.mygdx.game.Entidades.Disparo;
+import com.mygdx.game.Entidades.Rata;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
 
-import static com.mygdx.game.Constantes.MAX_RATS_SPAWN_TIME;
-import static com.mygdx.game.Constantes.MIN_RATS_SPAWN_TIME;
-import static com.mygdx.game.Constantes.WIDTH;
+import static com.badlogic.gdx.Input.Keys;
+import static com.mygdx.game.Constantes.ALTO_PANTALLA;
+import static com.mygdx.game.Constantes.ALTO_RATA;
+import static com.mygdx.game.Constantes.GRISACIUS_ALTO;
+import static com.mygdx.game.Constantes.GRISACIUS_ANCHO;
+import static com.mygdx.game.Constantes.MAX_RATAS;
+import static com.mygdx.game.Constantes.MIN_RATAS;
+import static com.mygdx.game.Constantes.VELOCIDAD_GRISACIUS;
+import static com.mygdx.game.Constantes.TIEMPO_DISPARO;
+import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
 
 /**
- * Created by juana on 23/01/2018.
+ * Created by juana on 29/01/2018.
  */
 
-public class GameScreen extends BaseScreen {
+class GameScreen implements Screen {
 
+    //CONSTANTES
 
-    private Stage stage;
-    private World world;
-    private Grisacius grisacius;
+    public Game game;
+    protected float grisaciusX, grisaciusY;
+    protected float disparoTime;
+    protected float statetime;
+    float ratSpawnTimer;
+    ArrayList<Disparo> disparos;
+    ArrayList<Rata> ratas;
+    protected Texture grisacius;
 
-    public Random random;
-    public float ratSpamTime;
-    private Music bgMusic;
-    private List<RataNormal> listaRatasActivas;
-    ArrayList<RataNormal> listaRatasEliminadas;
-    private List<Queso> listaQuesos = new ArrayList<Queso>();
-    private ArrayList<Maullido> listaMaullidos;
-    protected ListIterator<RataNormal> itr;
+    protected Random random;
+    public Texture background;
+    public Music bgMusic;
+    public Sound ratHit;
+    protected BitmapFont scoreFont;
+    protected int score;
 
-
-    public GameScreen(MainGame game) {
-        super(game);
+    public GameScreen(Game game) {
         this.game = game;
-
-        bgMusic = game.getManager().get("spazzmatica.ogg");
-        stage = new Stage(new FitViewport(1280f, 720f));
-        world = new World(new Vector2(0, 0), true);
-        world.setContactListener(new ContactListener() {
-            private boolean hanColisionado(Contact contact, Object userA, Object userB) {
-                Object userDataA = contact.getFixtureA().getUserData();
-                Object userDataB = contact.getFixtureB().getUserData();
-
-                if (userDataA == null || userDataB == null) {
-                    return false;
-                }
-
-                return (userDataA.equals(userA) && userDataB.equals(userB)) || (userDataA.equals(userB) && userDataB.equals(userA));
-            }
-
-            @Override
-            public void beginContact(Contact contact) {
-                if (hanColisionado(contact, "Maullido", "Rata")) {
-
-                    for (RataNormal c : listaRatasActivas) {
-                        if (c.body == contact.getFixtureA().getBody()) {
-                            listaRatasEliminadas.add(c);
-
-                        }
-                    }
-
-                }
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-
-
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-
-            }
-        });
-
+        grisaciusY = 3;
+        grisaciusX = 90;
+        disparos = new ArrayList<Disparo>();
+        ratas = new ArrayList<Rata>();
         random = new Random();
-        ratSpamTime = random.nextFloat() * (MAX_RATS_SPAWN_TIME - MIN_RATS_SPAWN_TIME) + MIN_RATS_SPAWN_TIME;
-
-
+        ratSpawnTimer = random.nextFloat() * (MAX_RATAS - MIN_RATAS) + MIN_RATAS;
+        disparoTime = 0;
+        score=0;
+        scoreFont=new BitmapFont(Gdx.files.internal("score.fnt"));
+        grisacius = new Texture("gato.png");
+        background=new Texture("fondo.png");
+        bgMusic=Gdx.audio.newMusic(Gdx.files.internal("spazzmatica.ogg"));
+        ratHit=Gdx.audio.newSound(Gdx.files.internal("rataDisparada.wav"));
     }
+
 
     @Override
     public void show() {
-        //Pedimos las texturas al Asset manager
-        //stage.setDebugAll(true);
 
-        Texture texturaGrisacius = game.getManager().get("gatoo1.png");
-        Texture quesotexture = game.getManager().get("queso.png");
-        Texture texturarata = game.getManager().get("ratacartoon1.png");
-        Texture maullidotexture = game.getManager().get("maullido.png");
-        listaRatasActivas = new ArrayList<RataNormal>();
-        listaRatasEliminadas = new ArrayList<RataNormal>();
-        listaMaullidos = new ArrayList<Maullido>();
-
-
-        //Instanciamos las clases
-        grisacius = new Grisacius(world, texturaGrisacius, new Vector2(1.6f, 3));
-        listaQuesos.add(new Queso(world, quesotexture, new Vector2(0.8f, 6.5f)));
-        listaQuesos.add(new Queso(world, quesotexture, new Vector2(0.8f, 5)));
-        listaQuesos.add(new Queso(world, quesotexture, new Vector2(0.8f, 3.5f)));
-        listaQuesos.add(new Queso(world, quesotexture, new Vector2(0.8f, 2)));
-        listaQuesos.add(new Queso(world, quesotexture, new Vector2(0.8f, 0.5f)));
-        stage.addActor(grisacius);
-        for (Queso x : listaQuesos) {
-            stage.addActor(x);
-        }
-        bgMusic.setVolume(0.75f);
         bgMusic.play();
+        bgMusic.setLooping(true);
 
-    }
-
-    @Override
-    public void hide() {
-        grisacius.desacoplar();
-        grisacius.remove();
-        for (RataNormal c : listaRatasActivas) {
-            c.desacoplar();
-            c.remove();
-        }
-        for (Queso x : listaQuesos) {
-            x.desacoplar();
-            x.remove();
-        }
-        bgMusic.stop();
     }
 
     @Override
     public void render(float delta) {
 
+        // codigo disparo
+        disparoTime += delta;
+        if ((isUP() || isDown()) && disparoTime >= TIEMPO_DISPARO) {
+            disparoTime = 0;
+            disparos.add(new Disparo(grisaciusY + 0.5f));
+
+        }
+
+
+        // respawn ratas
+        ratSpawnTimer -= delta;
+        if (ratSpawnTimer <= 0) {
+            ratSpawnTimer = random.nextFloat() * (MAX_RATAS - MIN_RATAS) + MIN_RATAS;
+            ratas.add(new Rata(random.nextInt(ALTO_PANTALLA - ALTO_RATA)));
+        }
+        //Update ratas
+        ArrayList<Rata> ratasEliminar = new ArrayList<Rata>();
+        for (Rata rat : ratas) {
+            rat.update(delta);
+            if (rat.remove)
+                ratasEliminar.add(rat);
+        }
+        //Update disparos
+        ArrayList<Disparo> disparosEliminar = new ArrayList<Disparo>();
+        for (Disparo miau : disparos) {
+            miau.update(delta);
+            if (miau.remove)
+                disparosEliminar.add(miau);
+        }
+
+        // Codigo movimiento
+        if (isUP()) {// ARRIBA
+            grisaciusY += VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
+
+            if (grisaciusY > Constantes.ALTO_PANTALLA)
+                grisaciusY = Constantes.ALTO_PANTALLA -grisacius.getHeight();
+        }
+        if (isDown()) {//ABAJO
+            grisaciusY -= VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
+
+            if (grisaciusY < 0)
+                grisaciusY = 0;
+        }
+        //COLISIONES
+        for (Disparo miau : disparos) {
+            for (Rata rata : ratas) {
+                if (miau.getColision().chocadoCon(rata.getColision())) {
+                    ratHit.play();
+                    disparosEliminar.add(miau);
+                    ratasEliminar.add(rata);
+                    score += 5;
+
+
+                }
+            }
+        }
+        disparos.removeAll(disparosEliminar);
+        ratas.removeAll(ratasEliminar);
+        statetime += delta;
+        // aumentamos dificultad segun pase el tiempo
+        dificultad();
+
+        Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl20.glClearColor(0.4f, 0.5f, 0.8f, 1f);
-        stage.act(delta);
+        MainGame.batch.begin();
+        MainGame.batch.draw(background,0,0);
 
-        //SPAWN RATAS
-        ratSpamTime -= delta;
-        if (ratSpamTime <= 0) {
-            ratSpamTime = random.nextFloat() * (MAX_RATS_SPAWN_TIME - MIN_RATS_SPAWN_TIME) + MIN_RATS_SPAWN_TIME;
-            listaRatasActivas.add(new RataNormal(this.world, new Texture("ratacartoon1.png"), random.nextInt((int) (WIDTH - 1))));
-            for (RataNormal c : listaRatasActivas) {
-                stage.addActor(c);
+        MainGame.fondoAnimado.updateAndRender(delta, MainGame.batch);
 
-            }
-        }
-        // SPAWN MAULLIDOS
-        if (Gdx.input.isTouched()) {
+        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + score);
+        scoreFont.draw(MainGame.batch, scoreLayout, 900,690);
 
-            listaMaullidos.add(new Maullido(this.world, new Texture("maullido.png"), grisacius));
-            for (Maullido maullido : listaMaullidos) {
-                stage.addActor(maullido);
-            }
+        if (bgMusic.isLooping())
 
+
+
+        for (Disparo miau : disparos) {
+            miau.render(MainGame.batch);
         }
 
-        itr = listaRatasEliminadas.listIterator();
-
-        while (itr.hasNext()) {
-
-            RataNormal x = itr.next();
-
-            stage.getRoot().removeActor(x);
-            x.remove();
-
+        for (Rata rata : ratas) {
+            rata.render(MainGame.batch);
         }
-        Constantes.MIN_RATS_SPAWN_TIME -= 0.00001f;
+        MainGame.batch.draw(grisacius, grisaciusX, grisaciusY, GRISACIUS_ANCHO, GRISACIUS_ALTO);
 
 
-        world.step(delta, 6, 2);
-        stage.draw();
+
+        MainGame.batch.end();
+
+
+    }
+    public void dificultad(){
+        MIN_RATAS-=0.000001f;
+        VELOCIDAD_RATA+=0.5f;
+        TIEMPO_DISPARO -=0.000001f;
+    }
+
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
-        world.dispose();
+        bgMusic.stop();
+        grisacius.dispose();
+
+
+    }
+
+    private boolean isUP() {
+        return Gdx.input.isKeyPressed(Keys.UP) || (Gdx.input.isTouched() && MainGame.cam.getInputInGameWorld().y < ALTO_PANTALLA / 2);
+    }
+
+    private boolean isDown() {
+        return Gdx.input.isKeyPressed(Keys.DOWN) || (Gdx.input.isTouched() && MainGame.cam.getInputInGameWorld().y >= ALTO_PANTALLA/ 2);
     }
 
 

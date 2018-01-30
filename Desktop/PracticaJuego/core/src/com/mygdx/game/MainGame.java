@@ -1,29 +1,44 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Texture;
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Tools.GameCamera;
+import com.mygdx.game.Tools.ScrollingBackground;
+import static com.mygdx.game.Constantes.ALTO_PANTALLA;
+import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
 public class MainGame extends Game {
-    private AssetManager manager;
 
-    public AssetManager getManager() {
-        return manager;
+
+    public static boolean IS_MOBILE = false;
+    public static SpriteBatch batch;
+    public static ScrollingBackground fondoAnimado;
+    public static GameCamera cam;
+
+    @Override
+    public void create () {
+        batch = new SpriteBatch();
+        cam = new GameCamera(ANCHO_PANTALLA, ALTO_PANTALLA);
+
+        if (Gdx.app.getType() == Application.ApplicationType.Android || Gdx.app.getType() == Application.ApplicationType.iOS)
+            IS_MOBILE = true;
+        IS_MOBILE = true;
+
+        this.fondoAnimado = new ScrollingBackground();
+        this.setScreen(new GameScreen(this));
     }
 
     @Override
-    public void create() {
-        manager = new AssetManager();
-        manager.load("gatoo1.png", Texture.class);
-        manager.load("queso.png", Texture.class);
-        manager.load("ratacartoon1.png", Texture.class);
-        manager.load("maullido.png", Texture.class);
-        manager.load("spazzmatica.ogg", Music.class);
-
-        // Se va a cargar de forma sincrona (Syncronized)
-        manager.finishLoading();
-
-        setScreen(new GameScreen(this));
+    public void render () {
+        batch.setProjectionMatrix(cam.combined());
+        super.render();
     }
+
+    @Override
+    public void resize(int width, int height) {
+        cam.update(width, height);
+        super.resize(width, height);
+    }
+
 }
