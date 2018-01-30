@@ -1,4 +1,5 @@
 package com.mygdx.game;
+
 /**
  * Created by juana on 23/01/2018.
  */
@@ -36,11 +37,6 @@ public class Constantes {
     public static int VELOCIDAD_DEFECTO = 80;
     public static int ACELERACION = 50;
     public static int ACELERACION_OBJETIVO = 200;
-
-
-
-
-
 
 
 }

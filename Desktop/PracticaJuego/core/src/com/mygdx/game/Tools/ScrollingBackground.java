@@ -23,7 +23,7 @@ public class ScrollingBackground {
     float imageScale;
     boolean speedFixed;
 
-    public ScrollingBackground () {
+    public ScrollingBackground() {
         image = new Texture("fondo.png");
 
         y1 = 0;
@@ -34,7 +34,7 @@ public class ScrollingBackground {
         speedFixed = true;
     }
 
-    public void updateAndRender (float deltaTime, SpriteBatch batch) {
+    public void updateAndRender(float deltaTime, SpriteBatch batch) {
 
         if (speed < goalSpeed) {
             speed += ACELERACION_OBJETIVO * deltaTime;

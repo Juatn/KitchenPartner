@@ -22,8 +22,8 @@ import static com.mygdx.game.Constantes.GRISACIUS_ALTO;
 import static com.mygdx.game.Constantes.GRISACIUS_ANCHO;
 import static com.mygdx.game.Constantes.MAX_RATAS;
 import static com.mygdx.game.Constantes.MIN_RATAS;
-import static com.mygdx.game.Constantes.VELOCIDAD_GRISACIUS;
 import static com.mygdx.game.Constantes.TIEMPO_DISPARO;
+import static com.mygdx.game.Constantes.VELOCIDAD_GRISACIUS;
 import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
 
 /**
@@ -59,12 +59,12 @@ class GameScreen implements Screen {
         random = new Random();
         ratSpawnTimer = random.nextFloat() * (MAX_RATAS - MIN_RATAS) + MIN_RATAS;
         disparoTime = 0;
-        score=0;
-        scoreFont=new BitmapFont(Gdx.files.internal("score.fnt"));
+        score = 0;
+        scoreFont = new BitmapFont(Gdx.files.internal("score.fnt"));
         grisacius = new Texture("gato.png");
-        background=new Texture("fondo.png");
-        bgMusic=Gdx.audio.newMusic(Gdx.files.internal("spazzmatica.ogg"));
-        ratHit=Gdx.audio.newSound(Gdx.files.internal("rataDisparada.wav"));
+        background = new Texture("fondo.png");
+        bgMusic = Gdx.audio.newMusic(Gdx.files.internal("spazzmatica.ogg"));
+        ratHit = Gdx.audio.newSound(Gdx.files.internal("rataDisparada.wav"));
     }
 
 
@@ -114,7 +114,7 @@ class GameScreen implements Screen {
             grisaciusY += VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
 
             if (grisaciusY > Constantes.ALTO_PANTALLA)
-                grisaciusY = Constantes.ALTO_PANTALLA -grisacius.getHeight();
+                grisaciusY = Constantes.ALTO_PANTALLA - grisacius.getHeight();
         }
         if (isDown()) {//ABAJO
             grisaciusY -= VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
@@ -144,20 +144,19 @@ class GameScreen implements Screen {
         Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         MainGame.batch.begin();
-        MainGame.batch.draw(background,0,0);
+        MainGame.batch.draw(background, 0, 0);
 
         MainGame.fondoAnimado.updateAndRender(delta, MainGame.batch);
 
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + score);
-        scoreFont.draw(MainGame.batch, scoreLayout, 900,690);
+        scoreFont.draw(MainGame.batch, scoreLayout, 900, 690);
 
         if (bgMusic.isLooping())
 
 
-
-        for (Disparo miau : disparos) {
-            miau.render(MainGame.batch);
-        }
+            for (Disparo miau : disparos) {
+                miau.render(MainGame.batch);
+            }
 
         for (Rata rata : ratas) {
             rata.render(MainGame.batch);
@@ -165,15 +164,15 @@ class GameScreen implements Screen {
         MainGame.batch.draw(grisacius, grisaciusX, grisaciusY, GRISACIUS_ANCHO, GRISACIUS_ALTO);
 
 
-
         MainGame.batch.end();
 
 
     }
-    public void dificultad(){
-        MIN_RATAS-=0.000001f;
-        VELOCIDAD_RATA+=0.5f;
-        TIEMPO_DISPARO -=0.000001f;
+
+    public void dificultad() {
+        MIN_RATAS -= 0.000001f;
+        VELOCIDAD_RATA += 0.5f;
+        TIEMPO_DISPARO -= 0.000001f;
     }
 
 
@@ -210,7 +209,7 @@ class GameScreen implements Screen {
     }
 
     private boolean isDown() {
-        return Gdx.input.isKeyPressed(Keys.DOWN) || (Gdx.input.isTouched() && MainGame.cam.getInputInGameWorld().y >= ALTO_PANTALLA/ 2);
+        return Gdx.input.isKeyPressed(Keys.DOWN) || (Gdx.input.isTouched() && MainGame.cam.getInputInGameWorld().y >= ALTO_PANTALLA / 2);
     }
 
 

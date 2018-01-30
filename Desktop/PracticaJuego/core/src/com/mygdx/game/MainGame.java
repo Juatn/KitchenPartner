@@ -6,8 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Tools.GameCamera;
 import com.mygdx.game.Tools.ScrollingBackground;
+
 import static com.mygdx.game.Constantes.ALTO_PANTALLA;
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
+
 public class MainGame extends Game {
 
 
@@ -17,7 +19,7 @@ public class MainGame extends Game {
     public static GameCamera cam;
 
     @Override
-    public void create () {
+    public void create() {
         batch = new SpriteBatch();
         cam = new GameCamera(ANCHO_PANTALLA, ALTO_PANTALLA);
 
@@ -30,7 +32,7 @@ public class MainGame extends Game {
     }
 
     @Override
-    public void render () {
+    public void render() {
         batch.setProjectionMatrix(cam.combined());
         super.render();
     }
