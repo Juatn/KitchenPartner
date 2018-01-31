@@ -13,7 +13,7 @@ public class Queso {
     public static int ANCHO_QUESO=80;
     private static Texture texture;
     public float x,y;
-    public CompruebaColisiones colision;
+    public CompruebaColisiones colision;//
     public boolean remove=false;
 
 
