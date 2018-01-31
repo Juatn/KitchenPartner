@@ -25,13 +25,10 @@ public class Constantes {
     // DISPAROS
     public static int VELOCIDAD_DISPARO = 1000;
     public static int DEFAULT_X = 40;
-    public static int ANCHO_DISPARO = 50;
-    public static int ALTO_DISPARO = 70;
 
     //RATA
     public static int VELOCIDAD_RATA = 150;
-    public static int ANCHO_RATA = 60;
-    public static int ALTO_RATA = 65;
+
 
     // FONDO ANIMADO
     public static int VELOCIDAD_DEFECTO = 80;

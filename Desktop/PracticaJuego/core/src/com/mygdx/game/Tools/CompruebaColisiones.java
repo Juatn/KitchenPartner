@@ -4,12 +4,12 @@ package com.mygdx.game.Tools;
  * Created by juana on 29/01/2018.
  */
 
-public class compruebaColisiones {
+public class CompruebaColisiones {
 
     float x, y;
     int ancho, alto;
 
-    public compruebaColisiones(float x, float y, int ancho, int alto) {
+    public CompruebaColisiones(float x, float y, int ancho, int alto) {
         this.x = x;
         this.y = y;
         this.ancho = ancho;
@@ -21,7 +21,7 @@ public class compruebaColisiones {
         this.y = y;
     }
 
-    public boolean chocadoCon(compruebaColisiones b) {
+    public boolean chocadoCon(CompruebaColisiones b) {
         return x < b.x + b.ancho && y < b.y + b.alto && x + ancho > b.x && y + alto > b.y;
     }
 }

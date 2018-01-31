@@ -10,14 +10,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.game.Entidades.Disparo;
+import com.mygdx.game.Entidades.Queso;
 import com.mygdx.game.Entidades.Rata;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
+
+import sun.applet.Main;
 
 import static com.badlogic.gdx.Input.Keys;
 import static com.mygdx.game.Constantes.ALTO_PANTALLA;
-import static com.mygdx.game.Constantes.ALTO_RATA;
+
+import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
 import static com.mygdx.game.Constantes.GRISACIUS_ALTO;
 import static com.mygdx.game.Constantes.GRISACIUS_ANCHO;
 import static com.mygdx.game.Constantes.MAX_RATAS;
@@ -25,6 +30,7 @@ import static com.mygdx.game.Constantes.MIN_RATAS;
 import static com.mygdx.game.Constantes.TIEMPO_DISPARO;
 import static com.mygdx.game.Constantes.VELOCIDAD_GRISACIUS;
 import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
+import static com.mygdx.game.Entidades.Rata.ALTO_RATA;
 
 /**
  * Created by juana on 29/01/2018.
@@ -32,15 +38,15 @@ import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
 
 class GameScreen implements Screen {
 
-    //CONSTANTES
 
     public Game game;
-    protected float grisaciusX, grisaciusY;
+    protected float grisaciusY, grisaciusX;
     protected float disparoTime;
     protected float statetime;
     float ratSpawnTimer;
     ArrayList<Disparo> disparos;
     ArrayList<Rata> ratas;
+    public static ArrayList<Queso>quesos;
     protected Texture grisacius;
 
     protected Random random;
@@ -49,11 +55,16 @@ class GameScreen implements Screen {
     public Sound ratHit;
     protected BitmapFont scoreFont;
     protected int score;
+    protected int posicionQuesos;
+
 
     public GameScreen(Game game) {
         this.game = game;
-        grisaciusY = 3;
         grisaciusX = 90;
+        grisaciusY = 3;
+        posicionQuesos=30;
+
+        quesos=new ArrayList<Queso>();
         disparos = new ArrayList<Disparo>();
         ratas = new ArrayList<Rata>();
         random = new Random();
@@ -73,6 +84,13 @@ class GameScreen implements Screen {
 
         bgMusic.play();
         bgMusic.setLooping(true);
+
+        for(int i=0;i<5;i++){
+            quesos.add(new Queso(posicionQuesos));
+            posicionQuesos+=(Queso.ALTO_QUESO+40);
+
+        }
+
 
     }
 
@@ -135,8 +153,15 @@ class GameScreen implements Screen {
                 }
             }
         }
+
+
+
+
+
+
         disparos.removeAll(disparosEliminar);
         ratas.removeAll(ratasEliminar);
+
         statetime += delta;
         // aumentamos dificultad segun pase el tiempo
         dificultad();
@@ -152,6 +177,10 @@ class GameScreen implements Screen {
         scoreFont.draw(MainGame.batch, scoreLayout, 900, 690);
 
         if (bgMusic.isLooping())
+
+            for(Queso queso:quesos){
+            queso.render(MainGame.batch);
+            }
 
 
             for (Disparo miau : disparos) {

@@ -2,11 +2,8 @@ package com.mygdx.game.Entidades;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Tools.compruebaColisiones;
-
-import static com.mygdx.game.Constantes.ALTO_RATA;
+import com.mygdx.game.Tools.CompruebaColisiones;
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
-import static com.mygdx.game.Constantes.ANCHO_RATA;
 import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
 
 
@@ -20,16 +17,19 @@ public class Rata {
 
 
     private static Texture texture;
+    public static int ANCHO_RATA = 60;
+    public static int ALTO_RATA = 65;
+
 
     float x, y;
 
-    compruebaColisiones colision;
+    CompruebaColisiones colision;
     public boolean remove = false;
 
     public Rata(float y) {
         this.y = y;
         this.x = ANCHO_PANTALLA;
-        this.colision = new compruebaColisiones(y, x, ALTO_RATA, ANCHO_RATA);
+        this.colision = new CompruebaColisiones(y, x, ALTO_RATA, ANCHO_RATA);
 
         if (texture == null)
             texture = new Texture("ratacartoon1.png");
@@ -40,6 +40,7 @@ public class Rata {
         if (x < -ANCHO_RATA)
             remove = true;
 
+
         colision.mover(x, y);
     }
 
@@ -47,7 +48,7 @@ public class Rata {
         batch.draw(texture, x, y, ANCHO_RATA, ALTO_RATA);
     }
 
-    public compruebaColisiones getColision() {
+    public CompruebaColisiones getColision() {
         return colision;
     }
 
