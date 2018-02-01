@@ -25,6 +25,7 @@ public class Rata {
 
     CompruebaColisiones colision;
     public boolean remove = false;
+    public boolean haComido=false;
 
     public Rata(float y) {
         this.y = y;
@@ -37,8 +38,10 @@ public class Rata {
 
     public void update(float deltaTime) {
         x -= VELOCIDAD_RATA * deltaTime;
-        if (x < -ANCHO_RATA)
+        if (x < -ANCHO_RATA){
             remove = true;
+        }
+
 
 
         colision.mover(x, y);

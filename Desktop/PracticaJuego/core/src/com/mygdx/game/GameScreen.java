@@ -10,19 +10,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.game.Entidades.Disparo;
+import com.mygdx.game.Entidades.GameOver;
 import com.mygdx.game.Entidades.Queso;
 import com.mygdx.game.Entidades.Rata;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-
-import sun.applet.Main;
-
 import static com.badlogic.gdx.Input.Keys;
+import static com.mygdx.game.Constantes.*;
 import static com.mygdx.game.Constantes.ALTO_PANTALLA;
-
-import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
 import static com.mygdx.game.Constantes.GRISACIUS_ALTO;
 import static com.mygdx.game.Constantes.GRISACIUS_ANCHO;
 import static com.mygdx.game.Constantes.MAX_RATAS;
@@ -54,8 +49,10 @@ class GameScreen implements Screen {
     public Music bgMusic;
     public Sound ratHit;
     protected BitmapFont scoreFont;
+    protected BitmapFont quesosFont;
     protected int score;
     protected int posicionQuesos;
+    protected GameOver gameover;
 
 
     public GameScreen(Game game) {
@@ -64,6 +61,9 @@ class GameScreen implements Screen {
         grisaciusY = 3;
         posicionQuesos=30;
 
+
+        quesosFont=new BitmapFont(Gdx.files.internal("score.fnt"));
+         gameover=new GameOver();
         quesos=new ArrayList<Queso>();
         disparos = new ArrayList<Disparo>();
         ratas = new ArrayList<Rata>();
@@ -116,8 +116,9 @@ class GameScreen implements Screen {
         ArrayList<Rata> ratasEliminar = new ArrayList<Rata>();
         for (Rata rat : ratas) {
             rat.update(delta);
-            if (rat.remove)
+            if (rat.remove) {
                 ratasEliminar.add(rat);
+            }
         }
         //Update disparos
         ArrayList<Disparo> disparosEliminar = new ArrayList<Disparo>();
@@ -131,8 +132,8 @@ class GameScreen implements Screen {
         if (isUP()) {// ARRIBA
             grisaciusY += VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
 
-            if (grisaciusY > Constantes.ALTO_PANTALLA)
-                grisaciusY = Constantes.ALTO_PANTALLA - grisacius.getHeight();
+            if (grisaciusY > ALTO_PANTALLA)
+                grisaciusY = ALTO_PANTALLA - grisacius.getHeight();
         }
         if (isDown()) {//ABAJO
             grisaciusY -= VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
@@ -154,11 +155,22 @@ class GameScreen implements Screen {
             }
         }
 
+        ArrayList<Queso>quesosEliminar=new ArrayList<Queso>();
+        for(Queso queso:quesos){
+            queso.update(delta);
+            for(Rata rata:ratas){
+                if(rata.getColision().chocadoCon(queso.getColision())){
+                   quesosEliminar.add(queso);
+
+                }
+            }
+        }
 
 
 
 
 
+        quesos.removeAll(quesosEliminar);
         disparos.removeAll(disparosEliminar);
         ratas.removeAll(ratasEliminar);
 
@@ -174,7 +186,9 @@ class GameScreen implements Screen {
         MainGame.fondoAnimado.updateAndRender(delta, MainGame.batch);
 
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + score);
+        GlyphLayout quesosLayout=new GlyphLayout(quesosFont,"Quesos:"+quesos.size());
         scoreFont.draw(MainGame.batch, scoreLayout, 900, 690);
+        quesosFont.draw(MainGame.batch,quesosLayout,50,690);
 
         if (bgMusic.isLooping())
 
@@ -192,6 +206,11 @@ class GameScreen implements Screen {
         }
         MainGame.batch.draw(grisacius, grisaciusX, grisaciusY, GRISACIUS_ANCHO, GRISACIUS_ALTO);
 
+        if(quesos.isEmpty()){
+
+            gameover.render(MainGame.batch);
+            bgMusic.stop();
+        }
 
         MainGame.batch.end();
 

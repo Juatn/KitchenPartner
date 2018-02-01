@@ -28,6 +28,7 @@ public class Constantes {
 
     //RATA
     public static int VELOCIDAD_RATA = 150;
+    public static int VELOCIDAD_QUESO=500;
 
 
     // FONDO ANIMADO
