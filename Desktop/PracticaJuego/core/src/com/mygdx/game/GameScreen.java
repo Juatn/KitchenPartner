@@ -175,7 +175,7 @@ class GameScreen implements Screen {
         ratas.removeAll(ratasEliminar);
 
         statetime += delta;
-        // aumentamos dificultad segun pase el tiempo
+        // aumentamos dificultad segun pase el tiempo.
         dificultad();
 
         Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
