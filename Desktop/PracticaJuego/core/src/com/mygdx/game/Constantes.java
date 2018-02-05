@@ -19,7 +19,7 @@ public class Constantes {
     public static int GRISACIUS_ALTO_PIXEL = 32;
     public static int GRISACIUS_ANCHO = GRISACIUS_ANCHO_PIXEL * 3;
     public static int GRISACIUS_ALTO = GRISACIUS_ALTO_PIXEL * 3;
-    public static float VELOCIDAD_GRISACIUS = 600;
+    public static float VELOCIDAD_GRISACIUS = 800;
     public static float TIEMPO_DISPARO = 0.3f;
 
     // DISPAROS
@@ -27,8 +27,8 @@ public class Constantes {
     public static int DEFAULT_X = 40;
 
     //RATA
-    public static int VELOCIDAD_RATA = 150;
-    public static int VELOCIDAD_QUESO=500;
+    public static int VELOCIDAD_RATA = 200;
+    public static int VELOCIDAD_QUESO=600;
 
 
     // FONDO ANIMADO

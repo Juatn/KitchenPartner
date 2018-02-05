@@ -12,8 +12,6 @@ import static com.mygdx.game.Constantes.VELOCIDAD_QUESO;
  */
 
 public class GameOver {
-    public static int ALTO_QUESO=100;
-    public static int ANCHO_QUESO=80;
     private static Texture texture;
     public float x,y;
 
@@ -27,7 +25,7 @@ public class GameOver {
         this.y=0;
 
         if (texture == null) {
-            texture = new Texture("gameover.png");
+            texture = new Texture("gameover1.png");
         }
     }
 

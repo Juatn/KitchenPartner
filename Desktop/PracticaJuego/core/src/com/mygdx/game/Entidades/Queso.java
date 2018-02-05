@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Constantes;
 import com.mygdx.game.Tools.CompruebaColisiones;
 
+import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
 import static com.mygdx.game.Constantes.VELOCIDAD_QUESO;
 import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
 
@@ -36,13 +37,14 @@ public class Queso {
 
         if (rat.getX() < -rat.ANCHO_RATA)
             remove = true;
+            rat.remove=true;
     }
     public void update(float deltaTime) {
 
 
-        y += VELOCIDAD_QUESO * deltaTime;
-        if(y> Constantes.ALTO_PANTALLA+Constantes.ALTO_PANTALLA){
-            y=0;
+        y -= VELOCIDAD_QUESO * deltaTime;
+        if(y< 0){
+            y=ANCHO_PANTALLA;
         }
 
 

@@ -16,8 +16,8 @@ public class Disparo {
 
 
     private  Texture texture;
-    public  int ANCHO_DISPARO = 50;
-    public  int ALTO_DISPARO = 70;
+    public  int ANCHO_DISPARO = 40;
+    public  int ALTO_DISPARO = 50;
 
 
     float x, y;
@@ -30,7 +30,7 @@ public class Disparo {
         this.colision = new CompruebaColisiones(x, y, ANCHO_DISPARO, ALTO_DISPARO);
 
         if (texture == null)
-            texture = new Texture("disparo.png");
+            texture = new Texture("onda.png");
     }
 
     public void update(float deltaTime) {

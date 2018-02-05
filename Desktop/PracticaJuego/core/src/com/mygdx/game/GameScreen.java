@@ -47,6 +47,7 @@ class GameScreen implements Screen {
     protected Random random;
     public Texture background;
     public Music bgMusic;
+    public Music gameoverMusic;
     public Sound ratHit;
     protected BitmapFont scoreFont;
     protected BitmapFont quesosFont;
@@ -75,6 +76,7 @@ class GameScreen implements Screen {
         grisacius = new Texture("gato.png");
         background = new Texture("fondo.png");
         bgMusic = Gdx.audio.newMusic(Gdx.files.internal("spazzmatica.ogg"));
+        gameoverMusic=Gdx.audio.newMusic(Gdx.files.internal("gameover.mp3"));
         ratHit = Gdx.audio.newSound(Gdx.files.internal("rataDisparada.wav"));
     }
 
@@ -85,7 +87,7 @@ class GameScreen implements Screen {
         bgMusic.play();
         bgMusic.setLooping(true);
 
-        for(int i=0;i<5;i++){
+        for(int i=0;i<10;i++){
             quesos.add(new Queso(posicionQuesos));
             posicionQuesos+=(Queso.ALTO_QUESO+40);
 
@@ -161,6 +163,7 @@ class GameScreen implements Screen {
             for(Rata rata:ratas){
                 if(rata.getColision().chocadoCon(queso.getColision())){
                    quesosEliminar.add(queso);
+                   ratasEliminar.add(rata);
 
                 }
             }
@@ -188,7 +191,7 @@ class GameScreen implements Screen {
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + score);
         GlyphLayout quesosLayout=new GlyphLayout(quesosFont,"Quesos:"+quesos.size());
         scoreFont.draw(MainGame.batch, scoreLayout, 900, 690);
-        quesosFont.draw(MainGame.batch,quesosLayout,50,690);
+        quesosFont.draw(MainGame.batch,quesosLayout,100,690);
 
         if (bgMusic.isLooping())
 
@@ -210,6 +213,7 @@ class GameScreen implements Screen {
 
             gameover.render(MainGame.batch);
             bgMusic.stop();
+            gameoverMusic.play();
         }
 
         MainGame.batch.end();
@@ -248,6 +252,7 @@ class GameScreen implements Screen {
     public void dispose() {
         bgMusic.stop();
         grisacius.dispose();
+        gameoverMusic.stop();
 
 
     }
