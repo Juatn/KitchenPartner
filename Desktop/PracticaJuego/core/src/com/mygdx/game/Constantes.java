@@ -15,12 +15,7 @@ public class Constantes {
     public static float MAX_RATAS = 0.5f;
 
     // GRISACIUS
-    public static int GRISACIUS_ANCHO_PIXEL = 32;
-    public static int GRISACIUS_ALTO_PIXEL = 32;
-    public static int GRISACIUS_ANCHO = GRISACIUS_ANCHO_PIXEL * 3;
-    public static int GRISACIUS_ALTO = GRISACIUS_ALTO_PIXEL * 3;
-    public static float VELOCIDAD_GRISACIUS = 800;
-    public static float TIEMPO_DISPARO = 0.3f;
+
 
     // DISPAROS
     public static int VELOCIDAD_DISPARO = 1000;

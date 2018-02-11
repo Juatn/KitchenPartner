@@ -1,13 +1,12 @@
-package com.mygdx.game.Entidades;
+package com.mygdx.game.Entidades.Escenario1;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Constantes;
+import com.mygdx.game.Entidades.Escenario1.Rata;
 import com.mygdx.game.Tools.CompruebaColisiones;
 
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
 import static com.mygdx.game.Constantes.VELOCIDAD_QUESO;
-import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
 
 /**
  * Created by juana on 31/01/2018.

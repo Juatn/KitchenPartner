@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -9,23 +10,26 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.mygdx.game.Entidades.Disparo;
-import com.mygdx.game.Entidades.GameOver;
-import com.mygdx.game.Entidades.Queso;
-import com.mygdx.game.Entidades.Rata;
+import com.mygdx.game.Entidades.Escenario1.Disparo;
+import com.mygdx.game.Entidades.Escenario1.Game_Over;
+import com.mygdx.game.Entidades.Escenario1.Queso;
+import com.mygdx.game.Entidades.Escenario1.Rata;
+import com.mygdx.game.Entidades.Grisacius;
+import com.mygdx.game.Tools.ScrollingBackground;
+
 import java.util.ArrayList;
 import java.util.Random;
 import static com.badlogic.gdx.Input.Keys;
-import static com.mygdx.game.Constantes.*;
 import static com.mygdx.game.Constantes.ALTO_PANTALLA;
-import static com.mygdx.game.Constantes.GRISACIUS_ALTO;
-import static com.mygdx.game.Constantes.GRISACIUS_ANCHO;
+
 import static com.mygdx.game.Constantes.MAX_RATAS;
 import static com.mygdx.game.Constantes.MIN_RATAS;
-import static com.mygdx.game.Constantes.TIEMPO_DISPARO;
-import static com.mygdx.game.Constantes.VELOCIDAD_GRISACIUS;
+
 import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
-import static com.mygdx.game.Entidades.Rata.ALTO_RATA;
+import static com.mygdx.game.Entidades.Escenario1.Rata.ALTO_RATA;
+import static com.mygdx.game.Entidades.Grisacius.GRISACIUS_ALTO;
+import static com.mygdx.game.Entidades.Grisacius.GRISACIUS_ANCHO;
+import static com.mygdx.game.Entidades.Grisacius.TIEMPO_DISPARO;
 
 /**
  * Created by juana on 29/01/2018.
@@ -35,17 +39,17 @@ class GameScreen implements Screen {
 
 
     public Game game;
-    protected float grisaciusY, grisaciusX;
+
     protected float disparoTime;
     protected float statetime;
     float ratSpawnTimer;
     ArrayList<Disparo> disparos;
     ArrayList<Rata> ratas;
     public static ArrayList<Queso>quesos;
-    protected Texture grisacius;
+
+    protected ScrollingBackground fondo;
 
     protected Random random;
-    public Texture background;
     public Music bgMusic;
     public Music gameoverMusic;
     public Sound ratHit;
@@ -53,18 +57,23 @@ class GameScreen implements Screen {
     protected BitmapFont quesosFont;
     protected int score;
     protected int posicionQuesos;
-    protected GameOver gameover;
+    protected Game_Over gameover;
+    protected Texture fondoTexture;
+    protected Grisacius grisacius;
 
 
     public GameScreen(Game game) {
         this.game = game;
-        grisaciusX = 90;
-        grisaciusY = 3;
-        posicionQuesos=30;
+               posicionQuesos=30;
 
 
+
+        grisacius=new Grisacius();
+
+        fondoTexture=new Texture("fondo.png");
+        fondo=new ScrollingBackground(fondoTexture);
         quesosFont=new BitmapFont(Gdx.files.internal("score.fnt"));
-         gameover=new GameOver();
+         gameover=new Game_Over();
         quesos=new ArrayList<Queso>();
         disparos = new ArrayList<Disparo>();
         ratas = new ArrayList<Rata>();
@@ -73,8 +82,8 @@ class GameScreen implements Screen {
         disparoTime = 0;
         score = 0;
         scoreFont = new BitmapFont(Gdx.files.internal("score.fnt"));
-        grisacius = new Texture("gato.png");
-        background = new Texture("fondo.png");
+
+
         bgMusic = Gdx.audio.newMusic(Gdx.files.internal("spazzmatica.ogg"));
         gameoverMusic=Gdx.audio.newMusic(Gdx.files.internal("gameover.mp3"));
         ratHit = Gdx.audio.newSound(Gdx.files.internal("rataDisparada.wav"));
@@ -99,11 +108,14 @@ class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
+
+        grisacius.update(delta);
+
         // codigo disparo
         disparoTime += delta;
-        if ((isUP() || isDown()) && disparoTime >= TIEMPO_DISPARO) {
+        if ((grisacius.isUP() || grisacius.isDown()) && disparoTime >= TIEMPO_DISPARO) {
             disparoTime = 0;
-            disparos.add(new Disparo(grisaciusY + 0.5f));
+            disparos.add(new Disparo(grisacius.getY() + 0.5f));
 
         }
 
@@ -130,19 +142,8 @@ class GameScreen implements Screen {
                 disparosEliminar.add(miau);
         }
 
-        // Codigo movimiento
-        if (isUP()) {// ARRIBA
-            grisaciusY += VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
 
-            if (grisaciusY > ALTO_PANTALLA)
-                grisaciusY = ALTO_PANTALLA - grisacius.getHeight();
-        }
-        if (isDown()) {//ABAJO
-            grisaciusY -= VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
 
-            if (grisaciusY < 0)
-                grisaciusY = 0;
-        }
         //COLISIONES
         for (Disparo miau : disparos) {
             for (Rata rata : ratas) {
@@ -184,9 +185,9 @@ class GameScreen implements Screen {
         Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         MainGame.batch.begin();
-        MainGame.batch.draw(background, 0, 0);
 
-        MainGame.fondoAnimado.updateAndRender(delta, MainGame.batch);
+
+        fondo.updateAndRender(delta, MainGame.batch);
 
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + score);
         GlyphLayout quesosLayout=new GlyphLayout(quesosFont,"Quesos:"+quesos.size());
@@ -207,7 +208,7 @@ class GameScreen implements Screen {
         for (Rata rata : ratas) {
             rata.render(MainGame.batch);
         }
-        MainGame.batch.draw(grisacius, grisaciusX, grisaciusY, GRISACIUS_ANCHO, GRISACIUS_ALTO);
+        grisacius.render(MainGame.batch);
 
         if(quesos.isEmpty()){
 
@@ -251,19 +252,13 @@ class GameScreen implements Screen {
     @Override
     public void dispose() {
         bgMusic.stop();
-        grisacius.dispose();
+
         gameoverMusic.stop();
 
 
     }
 
-    private boolean isUP() {
-        return Gdx.input.isKeyPressed(Keys.UP) || (Gdx.input.isTouched() && MainGame.cam.getInputInGameWorld().y < ALTO_PANTALLA / 2);
-    }
 
-    private boolean isDown() {
-        return Gdx.input.isKeyPressed(Keys.DOWN) || (Gdx.input.isTouched() && MainGame.cam.getInputInGameWorld().y >= ALTO_PANTALLA / 2);
-    }
 
 
 }

@@ -15,7 +15,7 @@ public class MainGame extends Game {
 
     public static boolean IS_MOBILE = false;
     public static SpriteBatch batch;
-    public static ScrollingBackground fondoAnimado;
+
     public static GameCamera cam;
 
     @Override
@@ -27,8 +27,8 @@ public class MainGame extends Game {
             IS_MOBILE = true;
         IS_MOBILE = true;
 
-        this.fondoAnimado = new ScrollingBackground();
-        this.setScreen(new GameScreen(this));
+
+        this.setScreen(new GameScreen2(this));
     }
 
     @Override

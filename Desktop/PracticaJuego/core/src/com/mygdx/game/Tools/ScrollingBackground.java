@@ -23,8 +23,8 @@ public class ScrollingBackground {
     float imageScale;
     boolean speedFixed;
 
-    public ScrollingBackground() {
-        image = new Texture("fondo.png");
+    public ScrollingBackground(Texture img) {
+        image =img ;
 
         y1 = 0;
         y2 = image.getHeight();
