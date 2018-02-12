@@ -53,12 +53,13 @@ public class GameScreen2 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         MainGame.batch.begin();
         fondo.updateAndRender(delta,MainGame.batch);
+        jefe.render(MainGame.batch);
         grisacius.render(MainGame.batch);
         for(Disparo_Boss c: jefe.disparos){
             c.update(delta);
             c.render(MainGame.batch);
         }
-        jefe.render(MainGame.batch);
+
         MainGame.batch.end();
 
     }

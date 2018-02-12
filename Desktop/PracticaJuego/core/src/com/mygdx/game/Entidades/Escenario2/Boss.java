@@ -28,6 +28,7 @@ public class Boss  implements MoldeBoss{
     public boolean remove= false;
     public static int health=5000;
     public Random posibilidad;
+    public static int VELOCIDAD_BOSS=400;
     public ArrayList<Disparo_Boss> disparos=new ArrayList<Disparo_Boss>();
 
 
@@ -54,12 +55,12 @@ public class Boss  implements MoldeBoss{
 
 
         if(posibilidad.nextBoolean()){
-            sube(aleatorio);
+            sube(aleatorio,deltaTime);
         }
         else{
-            baja(aleatorio);
+            baja(aleatorio,deltaTime);
         }
-        if(this.y+300>ALTO_PANTALLA){
+        if(this.y>ALTO_PANTALLA){
            this.y=(ALTO_PANTALLA-ALTO_BOSS);
         }
 
@@ -73,11 +74,11 @@ public class Boss  implements MoldeBoss{
 
     }
 
-    public void sube(float speed){
-        this.y=this.y+speed;
+    public void sube(float speed,float deltatime){
+        y += VELOCIDAD_BOSS * deltatime;
     }
-    public void baja(float speed){
-        this.y=this.y-speed;
+    public void baja(float speed, float deltatime){
+        y-=VELOCIDAD_BOSS*deltatime;
     }
 
 
