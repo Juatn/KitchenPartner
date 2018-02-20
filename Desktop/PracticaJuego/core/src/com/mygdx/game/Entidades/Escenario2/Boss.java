@@ -23,12 +23,12 @@ public class Boss  implements MoldeBoss{
     public static int ANCHO_BOSS = 200;
     public static int ALTO_BOSS = 400;
     public float x,y;
-    private static Texture texture;
+    public  Texture texture;
     public CompruebaColisiones colision;
     public boolean remove= false;
-    public static int health=5000;
+    public  int health=5000;
     public Random posibilidad;
-    public static int VELOCIDAD_BOSS=400;
+    public static int VELOCIDAD_BOSS=500;
     public ArrayList<Disparo_Boss> disparos=new ArrayList<Disparo_Boss>();
 
 
@@ -46,19 +46,22 @@ public class Boss  implements MoldeBoss{
     public void update(float deltaTime, Grisacius grisacius){
 
         int aleatorio = posibilidad.nextInt(50);
-       // Refrescar datos aleatorios
+
         if(aleatorio==25) {
 
             disparos.add(new Disparo_Boss(this));
+
 
         }
 
 
         if(posibilidad.nextBoolean()){
             sube(aleatorio,deltaTime);
+            colision.mover(x, y);
         }
         else{
             baja(aleatorio,deltaTime);
+            colision.mover(x, y);
         }
         if(this.y>ALTO_PANTALLA){
            this.y=(ALTO_PANTALLA-ALTO_BOSS);
@@ -86,7 +89,7 @@ public class Boss  implements MoldeBoss{
 
     @Override
     public void loseHealth() {
-        health=health-50;
+        health=health-1000;
 
     }
 
@@ -95,6 +98,7 @@ public class Boss  implements MoldeBoss{
         health=health+500;
     }
     public void render(SpriteBatch batch) {
+
         batch.draw(texture, x, y, ANCHO_BOSS, ALTO_BOSS);
     }
 

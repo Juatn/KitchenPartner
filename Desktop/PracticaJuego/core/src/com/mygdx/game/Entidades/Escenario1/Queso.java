@@ -13,9 +13,9 @@ import static com.mygdx.game.Constantes.VELOCIDAD_QUESO;
  */
 
 public class Queso {
-    public static int ALTO_QUESO=100;
+    public static int ALTO_QUESO=80;
     public static int ANCHO_QUESO=80;
-    private static Texture texture;
+    private  Texture texture;
     public float x,y;
     public CompruebaColisiones colision;//
     public boolean remove=false;
@@ -28,7 +28,7 @@ public class Queso {
         this.y=y;
         this.colision = new CompruebaColisiones(y, x, ALTO_QUESO, ANCHO_QUESO);
         if (texture == null) {
-            texture = new Texture("queso.png");
+            texture = new Texture("imagenes/cheese.png");
         }
     }
 
@@ -49,6 +49,15 @@ public class Queso {
 
         colision.mover(x, y);
     }
+
+    public  Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
     public void render(SpriteBatch batch) {
         batch.draw(texture, x, y, ANCHO_QUESO, ALTO_QUESO);
     }

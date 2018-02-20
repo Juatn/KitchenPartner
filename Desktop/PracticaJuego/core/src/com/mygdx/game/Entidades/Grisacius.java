@@ -4,8 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Entidades.Escenario1.Disparo;
 import com.mygdx.game.MainGame;
 import com.mygdx.game.Tools.CompruebaColisiones;
+
+import java.util.ArrayList;
 
 import static com.mygdx.game.Constantes.ALTO_PANTALLA;
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
@@ -25,6 +28,8 @@ public class Grisacius {
     public static int GRISACIUS_ALTO = GRISACIUS_ALTO_PIXEL * 3;
     public static float VELOCIDAD_GRISACIUS = 800;
     public static float TIEMPO_DISPARO = 0.3f;
+    protected float disparoTime;
+    public static ArrayList<Disparo>disparos;
 
 
         float x, y;
@@ -35,11 +40,12 @@ public class Grisacius {
 
         public Grisacius() {
             this.y = ALTO_PANTALLA/2;
-            this.x = 60f;
+            this.x = 80f;
+            disparos=new ArrayList<Disparo>();
             this.colision = new CompruebaColisiones(y, x, GRISACIUS_ALTO, GRISACIUS_ANCHO);
 
             if (texture == null)
-                texture = new Texture("gato.png");
+                texture = new Texture("imagenes/gato.png");
         }
 
         public void update(float deltaTime) {
@@ -54,6 +60,12 @@ public class Grisacius {
 
                 if (y < 0)
                     y = 0;
+            }
+            disparoTime += deltaTime;
+            if ((this.isUP() || this.isDown()) && disparoTime >= TIEMPO_DISPARO) {
+                disparoTime = 0;
+                disparos.add(new Disparo(this.getY() + 0.5f));
+
             }
 
 

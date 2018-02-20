@@ -1,10 +1,14 @@
 package com.mygdx.game;
 
+import java.util.Random;
+
 /**
  * Created by juana on 23/01/2018.
  */
 
 public class Constantes {
+
+    public static Random random=new Random();
 
 
     //  JUEGO
@@ -19,11 +23,12 @@ public class Constantes {
 
     // DISPAROS
     public static int VELOCIDAD_DISPARO = 1000;
-    public static int DEFAULT_X = 40;
+    public static int DEFAULT_X = 65;
 
     //RATA
     public static int VELOCIDAD_RATA = 200;
-    public static int VELOCIDAD_QUESO=600;
+    public static int VELOCIDAD_RATA_VERDE =200;
+    public static int VELOCIDAD_QUESO=200;
 
 
     // FONDO ANIMADO

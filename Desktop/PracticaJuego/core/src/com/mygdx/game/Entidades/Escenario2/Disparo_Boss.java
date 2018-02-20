@@ -16,8 +16,8 @@ public class Disparo_Boss {
 
 
         private Texture texture;
-        public  int ANCHO_DISPARO = 100;
-        public  int ALTO_DISPARO = 100;
+        public  int ANCHO_DISPARO = 70;
+        public  int ALTO_DISPARO = 70;
         public static int VELOCIDAD_DISPARO_BOSS=600;
 
 
@@ -31,7 +31,7 @@ public class Disparo_Boss {
             this.colision = new CompruebaColisiones(x, y, ANCHO_DISPARO, ALTO_DISPARO);
 
             if (texture == null)
-                texture = new Texture("disparo_boss.png");
+                texture = new Texture("imagenes/disparo_boss.png");
         }
 
 

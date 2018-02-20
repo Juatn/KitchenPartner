@@ -28,7 +28,7 @@ public class MainGame extends Game {
         IS_MOBILE = true;
 
 
-        this.setScreen(new GameScreen2(this));
+        this.setScreen(new GameScreen(this));
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.mygdx.game.Entidades.Escenario1;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Entidades.MoldeRat;
 import com.mygdx.game.Tools.CompruebaColisiones;
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
 import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
@@ -13,15 +14,14 @@ import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
 
 //p
 
-public class Rata {
+public class Rata implements MoldeRat{
 
 
     private static Texture texture;
-    public static int ANCHO_RATA = 60;
-    public static int ALTO_RATA = 65;
+    public static int ANCHO_RATA = 100;
+    public static int ALTO_RATA = 100;
+    public float x, y;
 
-
-    float x, y;
 
     CompruebaColisiones colision;
     public boolean remove = false;
@@ -33,7 +33,7 @@ public class Rata {
         this.colision = new CompruebaColisiones(y, x, ALTO_RATA, ANCHO_RATA);
 
         if (texture == null)
-            texture = new Texture("ratacartoon1.png");
+            texture = new Texture("imagenes/rata.png");
     }
 
     public void update(float deltaTime) {
@@ -62,5 +62,6 @@ public class Rata {
     public float getY() {
         return y;
     }
+
 
 }

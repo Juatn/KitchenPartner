@@ -20,6 +20,7 @@ public class Disparo {
     public  int ALTO_DISPARO = 50;
 
 
+
     float x, y;
     CompruebaColisiones colision;
     public boolean remove = false;
@@ -30,13 +31,14 @@ public class Disparo {
         this.colision = new CompruebaColisiones(x, y, ANCHO_DISPARO, ALTO_DISPARO);
 
         if (texture == null)
-            texture = new Texture("onda.png");
+            texture = new Texture("imagenes/onda.png");
     }
 
     public void update(float deltaTime) {
         x += VELOCIDAD_DISPARO * deltaTime;
         if (x > ANCHO_PANTALLA)
             remove = true;
+
 
         colision.mover(x, y);
     }

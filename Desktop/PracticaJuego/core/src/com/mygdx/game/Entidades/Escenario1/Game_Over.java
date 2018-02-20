@@ -25,7 +25,7 @@ public class Game_Over {
         this.y=0;
 
         if (texture == null) {
-            texture = new Texture("gameover1.png");
+            texture = new Texture("imagenes/gameover.png");
         }
     }
 
