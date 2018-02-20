@@ -5,7 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Tools.GameCamera;
-import com.mygdx.game.Tools.ScrollingBackground;
+import com.mygdx.game.Ventanas.GameScreen;
 
 import static com.mygdx.game.Constantes.ALTO_PANTALLA;
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;

@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Ventanas;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mygdx.game.Entidades.Escenario1.Disparo;
-import com.mygdx.game.Entidades.Escenario1.Game_Over;
 import com.mygdx.game.Entidades.Escenario1.Queso;
 import com.mygdx.game.Entidades.Escenario1.Rata;
 import com.mygdx.game.Entidades.Grisacius;
+import com.mygdx.game.MainGame;
 import com.mygdx.game.Tools.ScrollingBackground;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import static com.mygdx.game.Entidades.Grisacius.TIEMPO_DISPARO;
  * Created by juana on 29/01/2018.
  */
 
-class GameScreen implements Screen {
+public  class GameScreen implements Screen {
 
 
     public Game game;
@@ -45,13 +45,12 @@ class GameScreen implements Screen {
     protected ScrollingBackground fondo;
     protected Random random;
     public Music bgMusic;
-    public Music gameoverMusic;
-    public Sound ratHit;
+        public Sound ratHit;
     protected BitmapFont scoreFont;
     protected BitmapFont quesosFont;
     protected int score;
     protected int posicionQuesos;
-    protected Game_Over gameover;
+
     protected Texture fondoTexture;
     protected Grisacius grisacius;
     public int contadorQuesos;
@@ -68,7 +67,6 @@ class GameScreen implements Screen {
         fondoTexture=new Texture("imagenes/fondo.png");
         fondo=new ScrollingBackground(fondoTexture);
         quesosFont=new BitmapFont(Gdx.files.internal("score.fnt"));
-         gameover=new Game_Over();
 
         quesos=new ArrayList<Queso>();
         ratas = new ArrayList<Rata>();
@@ -81,8 +79,9 @@ class GameScreen implements Screen {
 
 
         bgMusic = Gdx.audio.newMusic(Gdx.files.internal("music/loopbgmusic.mp3"));
-        gameoverMusic=Gdx.audio.newMusic(Gdx.files.internal("music/gameover.mp3"));
+
         ratHit = Gdx.audio.newSound(Gdx.files.internal("music/rataDisparada.wav"));
+
     }
 
 
@@ -139,7 +138,7 @@ class GameScreen implements Screen {
         for (Disparo miau : grisacius.disparos) {
             for (Rata rata : ratas) {
                 if (miau.getColision().chocadoCon(rata.getColision())) {
-                    ratHit.play();
+                    ratHit.play(0.2f);
                     disparosEliminar.add(miau);
                     ratasEliminar.add(rata);
                     score += 5;
@@ -186,10 +185,10 @@ class GameScreen implements Screen {
         scoreFont.draw(MainGame.batch, scoreLayout, 900, 690);
         quesosFont.draw(MainGame.batch,quesosLayout,100,690);
 
-        if (bgMusic.isLooping())
+        if (bgMusic.isLooping()) {
 
-            for(Queso queso:quesos){
-            queso.render(MainGame.batch);
+            for (Queso queso : quesos) {
+                queso.render(MainGame.batch);
             }
 
 
@@ -197,17 +196,17 @@ class GameScreen implements Screen {
                 miau.render(MainGame.batch);
             }
 
-        for (Rata rata : ratas) {
-            rata.render(MainGame.batch);
+            for (Rata rata : ratas) {
+                rata.render(MainGame.batch);
+            }
+
+            grisacius.render(MainGame.batch);
         }
-
-        grisacius.render(MainGame.batch);
-
         if(contadorQuesos<=0){
 
-            gameover.render(MainGame.batch);
-            bgMusic.stop();
-            gameoverMusic.play();
+            this.dispose();
+            this.game.setScreen(new GameOver(this.game));
+
         }
 
         MainGame.batch.end();
@@ -246,7 +245,6 @@ class GameScreen implements Screen {
     public void dispose() {
         bgMusic.stop();
 
-        gameoverMusic.stop();
 
 
     }

@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Ventanas;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -6,10 +6,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Constantes;
 import com.mygdx.game.Entidades.Escenario1.Disparo;
 import com.mygdx.game.Entidades.Escenario2.Boss;
 import com.mygdx.game.Entidades.Escenario2.Disparo_Boss;
 import com.mygdx.game.Entidades.Grisacius;
+import com.mygdx.game.MainGame;
 import com.mygdx.game.Tools.ScrollingBackground;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
  * Created by juana on 10/02/2018.
  */
 
-public class GameScreen2 implements Screen {
+public class GameScreenPrimerBoss implements Screen {
 
     public Texture background;
     private Boss jefe;
@@ -28,9 +30,9 @@ public class GameScreen2 implements Screen {
     public Music musicBoss;
 
 
-    public GameScreen2(Game game){
+    public GameScreenPrimerBoss(Game game){
         musicBoss= Gdx.audio.newMusic(Gdx.files.internal("bossmusic.mp3"));
-        background=new Texture("fondoscene2.png");
+        background=new Texture("imagenes/fondoscene2.png");
         fondo=new ScrollingBackground(background);
         this.game=game;
         grisacius=new Grisacius();
