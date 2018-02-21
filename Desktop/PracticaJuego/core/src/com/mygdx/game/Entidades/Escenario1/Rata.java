@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Entidades.MoldeRat;
 import com.mygdx.game.Tools.CompruebaColisiones;
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
-import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
+import static com.mygdx.game.Constantes.MAX_VELOCIDAD_RATA;
+import static com.mygdx.game.Constantes.MIN_VELOCIDAD_RATA;
+import static com.mygdx.game.Constantes.getInt;
+import static com.mygdx.game.Constantes.random;
 
 
 /**
@@ -21,6 +24,7 @@ public class Rata implements MoldeRat{
     public static int ANCHO_RATA = 100;
     public static int ALTO_RATA = 100;
     public float x, y;
+    public int velocidad;
 
 
     CompruebaColisiones colision;
@@ -30,6 +34,7 @@ public class Rata implements MoldeRat{
     public Rata(float y) {
         this.y = y;
         this.x = ANCHO_PANTALLA;
+        velocidad=getInt(MIN_VELOCIDAD_RATA,MAX_VELOCIDAD_RATA);
         this.colision = new CompruebaColisiones(y, x, ALTO_RATA, ANCHO_RATA);
 
         if (texture == null)
@@ -37,7 +42,7 @@ public class Rata implements MoldeRat{
     }
 
     public void update(float deltaTime) {
-        x -= VELOCIDAD_RATA * deltaTime;
+        x -= velocidad * deltaTime;
         if (x < -ANCHO_RATA){
             remove = true;
         }

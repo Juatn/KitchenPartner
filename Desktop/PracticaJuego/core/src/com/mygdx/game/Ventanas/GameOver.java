@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Entidades.GameOver.Rata_Over;
 import com.mygdx.game.MainGame;
 
 /**
@@ -15,14 +16,18 @@ import com.mygdx.game.MainGame;
 public class GameOver implements Screen {
 
     public Texture fondo;
+    public Rata_Over rata;
     public Music gameoverMusic;
     public Game game;
+
 
     public GameOver(Game game){
 
 
            gameoverMusic= Gdx.audio.newMusic(Gdx.files.internal("music/gameover.mp3"));
            fondo=new Texture("imagenes/gameover.png");
+           rata=new Rata_Over(50);
+
           this.game=game;
     }
 
@@ -37,11 +42,12 @@ public class GameOver implements Screen {
     public void render(float delta) {
 
 
+        rata.update(delta);
         Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         MainGame.batch.begin();
         MainGame.batch.draw(fondo,0,0);
-
+        rata.render(MainGame.batch);
         MainGame.batch.end();
 
 

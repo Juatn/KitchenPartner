@@ -24,7 +24,7 @@ import static com.mygdx.game.Constantes.ALTO_PANTALLA;
 import static com.mygdx.game.Constantes.MAX_RATAS;
 import static com.mygdx.game.Constantes.MIN_RATAS;
 
-import static com.mygdx.game.Constantes.VELOCIDAD_RATA;
+import static com.mygdx.game.Constantes.MIN_VELOCIDAD_RATA;
 import static com.mygdx.game.Entidades.Escenario1.Rata.ALTO_RATA;
 import static com.mygdx.game.Entidades.Grisacius.TIEMPO_DISPARO;
 
@@ -58,7 +58,7 @@ public  class GameScreen implements Screen {
 
     public GameScreen(Game game) {
         this.game = game;
-               posicionQuesos=30;
+        posicionQuesos=30;
 
 
 
@@ -92,8 +92,9 @@ public  class GameScreen implements Screen {
         bgMusic.setLooping(true);
 
         for(int i=0;i<10;i++){
-            quesos.add(new Queso(posicionQuesos));
+
             posicionQuesos+=(Queso.ALTO_QUESO+40);
+            quesos.add(new Queso(posicionQuesos));
 
 
         }
@@ -208,6 +209,10 @@ public  class GameScreen implements Screen {
             this.game.setScreen(new GameOver(this.game));
 
         }
+        if(score>200){
+            this.dispose();
+            this.game.setScreen(new GameScreenPrimerBoss(this.game));
+        }
 
         MainGame.batch.end();
 
@@ -215,8 +220,9 @@ public  class GameScreen implements Screen {
     }
 
     public void dificultad() {
-        MIN_RATAS -= 0.000001f;
-        VELOCIDAD_RATA += 0.5f;
+        MIN_RATAS -= 0.00001f;
+        MIN_VELOCIDAD_RATA+=0.06f;
+
         TIEMPO_DISPARO -= 0.000001f;
     }
 

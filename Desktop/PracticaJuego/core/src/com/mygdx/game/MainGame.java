@@ -5,7 +5,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Tools.GameCamera;
+import com.mygdx.game.Ventanas.GameOver;
 import com.mygdx.game.Ventanas.GameScreen;
+import com.mygdx.game.Ventanas.GameScreenPrimerBoss;
 
 import static com.mygdx.game.Constantes.ALTO_PANTALLA;
 import static com.mygdx.game.Constantes.ANCHO_PANTALLA;
@@ -15,6 +17,7 @@ public class MainGame extends Game {
 
     public static boolean IS_MOBILE = false;
     public static SpriteBatch batch;
+
 
     public static GameCamera cam;
 

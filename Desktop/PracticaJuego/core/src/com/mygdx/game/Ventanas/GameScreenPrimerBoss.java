@@ -31,13 +31,13 @@ public class GameScreenPrimerBoss implements Screen {
 
 
     public GameScreenPrimerBoss(Game game){
-        musicBoss= Gdx.audio.newMusic(Gdx.files.internal("bossmusic.mp3"));
+        musicBoss= Gdx.audio.newMusic(Gdx.files.internal("music/loopbossmusic.mp3"));
         background=new Texture("imagenes/fondoscene2.png");
         fondo=new ScrollingBackground(background);
-        this.game=game;
+
         grisacius=new Grisacius();
         jefe=new Boss(Constantes.ANCHO_PANTALLA-250);
-
+        this.game=game;
     }
 
 
@@ -45,6 +45,7 @@ public class GameScreenPrimerBoss implements Screen {
     public void show() {
 
         musicBoss.play();
+        musicBoss.setLooping(true);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class GameScreenPrimerBoss implements Screen {
             x.update(delta);
             if(x.remove){
                 disparosEliminar.add(x);
+                System.out.print("eliminado");
             }
         }
 
@@ -72,22 +74,29 @@ public class GameScreenPrimerBoss implements Screen {
             miau.update(delta);
             if (miau.remove)
                 disparosDel.add(miau);
+
         }
 
         // COLISION jefe
         for (Disparo miau : grisacius.disparos) {
 
                 if (miau.getColision().chocadoCon(jefe.getColision())) {
-                    //ratHit.play();
+
                     System.out.print("asd");
                     disparosDel.add(miau);
-                       jefe.health-=500;
+                       jefe.loseHealth();
                                    }
             }
 
-            if(jefe.health<=0){
-            jefe.texture=new Texture("ratacartoon1.png");
+            for(Disparo_Boss c:jefe.disparos){
+            if(c.getColision().chocadoCon(grisacius.getColision())){
+                this.dispose();
+                game.setScreen(new GameOver(game));
             }
+            }
+
+
+
 
 
 
@@ -109,6 +118,12 @@ public class GameScreenPrimerBoss implements Screen {
             for(Disparo x:grisacius.disparos){
                 x.render(MainGame.batch);
             }
+        if(jefe.health<=0){
+
+            this.game.setScreen(new GameScreen(this.game));
+            this.dispose();
+        }
+
 
 
 
@@ -142,9 +157,9 @@ public class GameScreenPrimerBoss implements Screen {
     @Override
     public void dispose() {
 
-        MainGame.batch.dispose();
+
         musicBoss.dispose();
-        this.game.dispose();
+
 
 
 

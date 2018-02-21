@@ -16,9 +16,9 @@ public class Disparo_Boss {
 
 
         private Texture texture;
-        public  int ANCHO_DISPARO = 70;
-        public  int ALTO_DISPARO = 70;
-        public static int VELOCIDAD_DISPARO_BOSS=600;
+        public  int ANCHO_DISPARO = 100;
+        public  int ALTO_DISPARO = 100;
+        public static int VELOCIDAD_DISPARO_BOSS=800;
 
 
         float x, y;
@@ -44,7 +44,7 @@ public class Disparo_Boss {
         }
 
         public void render(SpriteBatch batch) {
-            batch.draw(texture, x, y);
+            batch.draw(texture, x, y,ANCHO_DISPARO,ALTO_DISPARO);
         }
 
         public CompruebaColisiones getColision() {

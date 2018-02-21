@@ -39,7 +39,7 @@ public class Boss  implements MoldeBoss{
         this.posibilidad=new Random();
 
         if (texture == null) {
-            texture = new Texture("boss1.png");
+            texture = new Texture("imagenes/jefe1.png");
         }
     }
 
@@ -89,7 +89,8 @@ public class Boss  implements MoldeBoss{
 
     @Override
     public void loseHealth() {
-        health=health-1000;
+        health=health-100;
+        System.out.print("pierde vida");
 
     }
 
