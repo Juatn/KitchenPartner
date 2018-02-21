@@ -157,8 +157,9 @@ public class GameScreenPrimerBoss implements Screen {
     @Override
     public void dispose() {
 
-
         musicBoss.dispose();
+
+        this.game.dispose();
 
 
 

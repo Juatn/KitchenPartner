@@ -250,6 +250,8 @@ public  class GameScreen implements Screen {
     @Override
     public void dispose() {
         bgMusic.stop();
+        this.game.dispose();
+
 
 
 
