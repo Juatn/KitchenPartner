@@ -90,7 +90,7 @@ public class Boss  implements MoldeBoss{
     @Override
     public void loseHealth() {
         health=health-100;
-        System.out.print("pierde vida");
+        //System.out.print("pierde vida");
 
     }
 
