@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.mygdx.game"
-        minSdkVersion 9
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -134,4 +134,8 @@ idea {
             }
         }
     }
+}
+
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
