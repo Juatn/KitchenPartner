@@ -1,5 +1,7 @@
 package com.mygdx.grisacius.Entidades.Escenario2;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.grisacius.Constantes;
@@ -30,20 +32,27 @@ public class Boss  implements MoldeBoss{
     public ArrayList<Disparo_Boss> disparos=new ArrayList<Disparo_Boss>();
 
 
+
     public Boss(float x ){
         this.y = Constantes.ALTO_PANTALLA/2;
         this.x = x;
         this.colision = new CompruebaColisiones(y, x, ALTO_BOSS, ANCHO_BOSS);
         this.posibilidad=new Random();
 
-        if (texture == null) {
-            texture = new Texture("imagenes/jefe1.png");
-        }
+
+
+
     }
 
     public void update(float deltaTime, Grisacius grisacius){
 
+        if (health > 0) {
+            texture = new Texture("imagenes/bossrat.png");
+        }
+
         int aleatorio = posibilidad.nextInt(50);
+
+
 
         if(aleatorio==25) {
 
@@ -51,6 +60,8 @@ public class Boss  implements MoldeBoss{
 
 
         }
+
+
 
 
         if(posibilidad.nextBoolean()){
@@ -99,6 +110,12 @@ public class Boss  implements MoldeBoss{
     public void render(SpriteBatch batch) {
 
         batch.draw(texture, x, y, ANCHO_BOSS, ALTO_BOSS);
+    }
+
+    public void dispose(){
+        this.texture.dispose();
+
+        this.disparos.clear();
     }
 
 

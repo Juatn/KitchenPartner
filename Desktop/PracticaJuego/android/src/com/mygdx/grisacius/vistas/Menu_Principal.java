@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 
+import com.mygdx.grisacius.AndroidLauncher;
 import com.mygdx.grisacius.MainGame;
 import com.mygdx.grisacius.R;
 
@@ -68,6 +69,8 @@ public class Menu_Principal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                ventanaAjustes();
+
 
 
             }
@@ -95,15 +98,17 @@ public class Menu_Principal extends AppCompatActivity {
         startActivity(i);
     }
     public void nuevaPartida(){
-        Intent i = new Intent(getApplicationContext(), MainGame.class);
+
+        Intent i = new Intent(getApplicationContext(), AndroidLauncher.class);
         i.putExtra("Dificultad", dificultad);
+
 
         startActivity(i);
 
     }
 
     public void continuar(){
-        Intent i = new Intent(getApplicationContext(), MainGame.class);
+        Intent i = new Intent(getApplicationContext(), AndroidLauncher.class);
 
 
         startActivity(i);

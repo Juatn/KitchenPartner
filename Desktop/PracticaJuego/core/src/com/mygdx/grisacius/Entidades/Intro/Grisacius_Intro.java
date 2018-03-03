@@ -60,6 +60,9 @@ public class Grisacius_Intro {
 
 
     }
+    public void dispose(){
+        texture.dispose();
+    }
 
     public void render(SpriteBatch batch) {
         batch.draw(texture, x, y, ancho, alto);

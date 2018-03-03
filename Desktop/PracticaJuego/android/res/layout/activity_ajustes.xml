@@ -8,116 +8,115 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="99dp">
+        android:layout_height="100dp">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/todo"
-            android:src="@drawable/ajustes"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            android:background="@drawable/ajustes" />
+
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/azulFondo"
         android:orientation="vertical">
 
 
-        <Space
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="wrap_content"
+            android:text="                          Idioma"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        <GridLayout
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="67dp">
+            android:layout_height="78dp">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:height="20dp"
-                android:text="@string/idioma"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.EditText"
-                android:textScaleX="2" />
-        </GridLayout>
+            <RadioButton
+                android:id="@+id/radioCastellano"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Castellano" />
+
+            <RadioButton
+                android:id="@+id/radioIngles"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ingles" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/lblDificultad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="                          Dificultad"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="158dp">
+
+            <RadioButton
+                android:id="@+id/radioFacil"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Facil" />
+
+            <RadioButton
+                android:id="@+id/radioMedia"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Media" />
+
+            <RadioButton
+                android:id="@+id/radioDificil"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Dificil" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1" />
+
+        </RadioGroup>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/txtDificultad"
-                android:layout_width="199dp"
-                android:layout_height="51dp"
+            <Button
+                android:id="@+id/btnGuardar"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="138dp"
+                android:layout_height="61dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Modo"
-                android:textAppearance="@android:style/TextAppearance.SearchResult.Title"
+                android:background="@android:drawable/button_onoff_indicator_on"
+                android:backgroundTint="@color/azulBoton"
+                android:text="Guardar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.025" />
-
-            <RadioButton
-                android:id="@+id/rdbEasy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="RadioButton"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.307"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.267" />
-
-            <RadioButton
-                android:id="@+id/rdbMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="RadioButton"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.307"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <RadioButton
-                android:id="@+id/rdbHard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="184dp"
-                android:text="RadioButton"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.307"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.465" />
-
+                app:layout_constraintVertical_bias="0.181" />
         </android.support.constraint.ConstraintLayout>
+
     </LinearLayout>
 </LinearLayout>

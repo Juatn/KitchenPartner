@@ -21,8 +21,10 @@ import java.util.Random;
 
 import static com.mygdx.grisacius.Constantes.ALTO_PANTALLA;
 import static com.mygdx.grisacius.Constantes.MAX_RATAS;
+import static com.mygdx.grisacius.Constantes.MAX_VELOCIDAD_RATA;
 import static com.mygdx.grisacius.Constantes.MIN_RATAS;
 import static com.mygdx.grisacius.Constantes.MIN_VELOCIDAD_RATA;
+import static com.mygdx.grisacius.Constantes.SCORE;
 import static com.mygdx.grisacius.Entidades.Escenario1.Rata.ALTO_RATA;
 import static com.mygdx.grisacius.Entidades.Grisacius.TIEMPO_DISPARO;
 
@@ -30,10 +32,10 @@ import static com.mygdx.grisacius.Entidades.Grisacius.TIEMPO_DISPARO;
  * Created by juana on 29/01/2018.
  */
 
-public  class GameScreen implements Screen {
+public class GameScreen implements Screen {
 
 
-    public Game game;
+    public static Game game;
 
     protected float disparoTime;
     protected float statetime;
@@ -46,7 +48,7 @@ public  class GameScreen implements Screen {
         public Sound ratHit;
     protected BitmapFont scoreFont;
     protected BitmapFont quesosFont;
-    protected int score;
+
     protected int posicionQuesos;
 
     protected Texture fondoTexture;
@@ -72,7 +74,7 @@ public  class GameScreen implements Screen {
         ratSpawnTimer = random.nextFloat() * (MAX_RATAS - MIN_RATAS) + MIN_RATAS;
 
         disparoTime = 0;
-        score = 0;
+
         scoreFont = new BitmapFont(Gdx.files.internal("score.fnt"));
 
 
@@ -103,6 +105,10 @@ public  class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        if(!bgMusic.isPlaying()){
+            bgMusic.play();
+        }
 
 
         grisacius.update(delta);
@@ -141,7 +147,7 @@ public  class GameScreen implements Screen {
                     ratHit.play(0.2f);
                     disparosEliminar.add(miau);
                     ratasEliminar.add(rata);
-                    score += 5;
+                    SCORE += 5;
 
 
                 }
@@ -170,8 +176,6 @@ public  class GameScreen implements Screen {
         ratas.removeAll(ratasEliminar);
 
         statetime += delta;
-        // aumentamos dificultad segun pase el tiempo.
-        dificultad();
 
         Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -180,7 +184,7 @@ public  class GameScreen implements Screen {
 
         fondo.updateAndRender(delta, MainGame.batch);
 
-        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + score);
+        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + SCORE);
         GlyphLayout quesosLayout=new GlyphLayout(quesosFont,"Quesos:"+contadorQuesos);
         scoreFont.draw(MainGame.batch, scoreLayout, 900, 690);
         quesosFont.draw(MainGame.batch,quesosLayout,100,690);
@@ -202,15 +206,11 @@ public  class GameScreen implements Screen {
 
             grisacius.render(MainGame.batch);
         }
-        if(contadorQuesos<=0){
+        if(contadorQuesos<=8){
 
-            this.dispose();
-            this.game.setScreen(new GameOver(this.game));
-
-        }
-        if(score>200){
             this.dispose();
             this.game.setScreen(new GameScreenPrimerBoss(this.game));
+
         }
 
         MainGame.batch.end();
@@ -218,12 +218,7 @@ public  class GameScreen implements Screen {
 
     }
 
-    public void dificultad() {
-        MIN_RATAS -= 0.00001f;
-        MIN_VELOCIDAD_RATA+=0.06f;
 
-        TIEMPO_DISPARO -= 0.000001f;
-    }
 
 
     @Override
@@ -239,6 +234,18 @@ public  class GameScreen implements Screen {
     @Override
     public void resume() {
 
+
+        for(int i=0;i<10;i++){
+
+            posicionQuesos+=(Queso.ALTO_QUESO+40);
+            quesos.add(new Queso(posicionQuesos));
+
+
+        }
+
+
+
+
     }
 
     @Override
@@ -249,10 +256,11 @@ public  class GameScreen implements Screen {
     @Override
     public void dispose() {
         bgMusic.dispose();
-
-
-
-
+        fondoTexture.dispose();
+        quesos.clear();
+        ratas.clear();
+        scoreFont.dispose();
+        quesosFont.dispose();
 
     }
 

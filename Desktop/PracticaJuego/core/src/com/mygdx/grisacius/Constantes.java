@@ -3,6 +3,8 @@ package com.mygdx.grisacius;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.mygdx.grisacius.Entidades.Grisacius.TIEMPO_DISPARO;
+
 /**
  * Created by juana on 23/01/2018.
  */
@@ -18,6 +20,8 @@ public class Constantes {
     public static final int ALTO_PANTALLA = 720;
     public static float MIN_RATAS = 1f;
     public static float MAX_RATAS = 0.5f;
+    public static int SCORE=0;
+
 
     // GRISACIUS
 
@@ -41,8 +45,18 @@ public class Constantes {
     public static int ACELERACION = 50;
     public static int ACELERACION_OBJETIVO = 200;
 
+
     public static int getInt(int min, int max) {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
+    }
+
+    public static void dificultad(){
+        MIN_RATAS -= 0.001f;
+        MIN_VELOCIDAD_RATA+=50f;
+        MAX_VELOCIDAD_RATA+=100f;
+        VELOCIDAD_QUESO+=50;
+
+        TIEMPO_DISPARO -= 0.00001f;
     }
 
 

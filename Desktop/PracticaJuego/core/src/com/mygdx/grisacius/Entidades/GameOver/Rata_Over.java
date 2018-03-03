@@ -13,7 +13,7 @@ import static com.mygdx.grisacius.Constantes.MIN_EMPEZAR;
 public class Rata_Over {
 
 
-    private static Texture texture;
+    public static Texture texture;
     public  int ANCHO_RATA = 280;
     public  int ALTO_RATA = 280;
     public boolean derecha;
@@ -57,6 +57,11 @@ public class Rata_Over {
 
     }
 
+    public void dispose(){
+        texture.dispose();
+
+
+    }
     public void render(SpriteBatch batch) {
         batch.draw(texture, x, y, ANCHO_RATA, ALTO_RATA);
     }

@@ -12,8 +12,8 @@ public class Disparo_Boss {
 
 
         private Texture texture;
-        public  int ANCHO_DISPARO = 100;
-        public  int ALTO_DISPARO = 100;
+        public static  int ANCHO_DISPARO = 50;
+        public static  int ALTO_DISPARO = 50;
         public static int VELOCIDAD_DISPARO_BOSS=800;
 
 
@@ -35,6 +35,7 @@ public class Disparo_Boss {
             x -= VELOCIDAD_DISPARO_BOSS * deltaTime;
             if (x < 0)
                 remove = true;
+
 
             colision.mover(x, y);
         }
