@@ -6,10 +6,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.grisacius.Constantes;
 import com.mygdx.grisacius.Entidades.GameOver.Rata_Over;
 import com.mygdx.grisacius.MainGame;
 
 import sun.applet.Main;
+
+import static com.mygdx.grisacius.MainGame.cam;
+import static com.mygdx.grisacius.MainGame.dataBase;
 
 /**
  * Created by juana on 21/02/2018.
@@ -21,17 +26,18 @@ public class GameOver implements Screen {
     public Rata_Over rata;
     public Music gameoverMusic;
     public Game game;
+    public SpriteBatch batch;
 
 
     public GameOver(Game game){
 
 
-
+           batch=new SpriteBatch();
            gameoverMusic= Gdx.audio.newMusic(Gdx.files.internal("music/gameover.mp3"));
            fondo=new Texture("imagenes/gameover.png");
            rata=new Rata_Over(50);
-
-          this.game=game;
+           Constantes.SCORE=0;
+           this.game=game;
     }
 
 
@@ -39,27 +45,27 @@ public class GameOver implements Screen {
     public void show() {
 
         gameoverMusic.play();
+        dataBase.endCurrentGame(Constantes.SCORE);
     }
 
     @Override
     public void render(float delta) {
 
-
-
-       if(gameoverMusic.isPlaying()) {
+           batch.setProjectionMatrix(cam.combined());
            rata.update(delta);
            Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-           MainGame.batch.begin();
-           MainGame.batch.draw(fondo, 0, 0);
-           rata.render(MainGame.batch);
-           MainGame.batch.end();
+           this.batch.begin();
+           this.batch.draw(fondo, 0, 0);
+           rata.render(this.batch);
+           this.batch.end();
 
-       }
+           if(Gdx.input.isTouched()){
+               this.dispose();
+           }
 
-       else{
-           this.dispose();
-       }
+
+
     }
 
     @Override
@@ -77,6 +83,7 @@ public class GameOver implements Screen {
 
         fondo.getTextureData();
         rata=new Rata_Over(50);
+        Constantes.SCORE=0;
 
     }
 
@@ -87,6 +94,7 @@ public class GameOver implements Screen {
 
     @Override
     public void dispose() {
+        batch.dispose();
         gameoverMusic.dispose();
         fondo.dispose();
         rata.dispose();

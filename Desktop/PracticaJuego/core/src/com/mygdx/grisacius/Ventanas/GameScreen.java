@@ -9,12 +9,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.grisacius.Constantes;
 import com.mygdx.grisacius.Entidades.Escenario1.Disparo;
 import com.mygdx.grisacius.Entidades.Escenario1.Queso;
 import com.mygdx.grisacius.Entidades.Escenario1.Rata;
 import com.mygdx.grisacius.Entidades.Grisacius;
 import com.mygdx.grisacius.MainGame;
 import com.mygdx.grisacius.Tools.ScrollingBackground;
+import com.mygdx.grisacius.bdd.GrisaciusDataBase;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -27,6 +30,7 @@ import static com.mygdx.grisacius.Constantes.MIN_VELOCIDAD_RATA;
 import static com.mygdx.grisacius.Constantes.SCORE;
 import static com.mygdx.grisacius.Entidades.Escenario1.Rata.ALTO_RATA;
 import static com.mygdx.grisacius.Entidades.Grisacius.TIEMPO_DISPARO;
+import static com.mygdx.grisacius.MainGame.cam;
 
 /**
  * Created by juana on 29/01/2018.
@@ -36,6 +40,8 @@ public class GameScreen implements Screen {
 
 
     public static Game game;
+    public SpriteBatch batch;
+
 
     protected float disparoTime;
     protected float statetime;
@@ -45,9 +51,10 @@ public class GameScreen implements Screen {
     protected ScrollingBackground fondo;
     protected Random random;
     public Music bgMusic;
-        public Sound ratHit;
+    public Sound ratHit;
     protected BitmapFont scoreFont;
     protected BitmapFont quesosFont;
+
 
     protected int posicionQuesos;
 
@@ -58,7 +65,10 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game) {
         this.game = game;
+
+
         posicionQuesos=30;
+        batch=new SpriteBatch();
 
 
 
@@ -105,6 +115,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        batch.setProjectionMatrix(cam.combined());
 
         if(!bgMusic.isPlaying()){
             bgMusic.play();
@@ -148,6 +159,7 @@ public class GameScreen implements Screen {
                     disparosEliminar.add(miau);
                     ratasEliminar.add(rata);
                     SCORE += 5;
+                    MainGame.dataBase.saveCurrentGame(SCORE);
 
 
                 }
@@ -176,44 +188,54 @@ public class GameScreen implements Screen {
         ratas.removeAll(ratasEliminar);
 
         statetime += delta;
+        if(SCORE==100||SCORE==500){
+
+            this.dispose();
+
+
+            this.game.setScreen(new GameScreenPrimerBoss(this.game));
+
+        }
+        if(contadorQuesos<=0){
+
+            this.dispose();
+            this.game.setScreen(new GameOver(this.game));
+
+        }
 
         Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        MainGame.batch.begin();
+        this.batch.begin();
 
 
-        fondo.updateAndRender(delta, MainGame.batch);
+        fondo.updateAndRender(delta, this.batch);
 
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + SCORE);
         GlyphLayout quesosLayout=new GlyphLayout(quesosFont,"Quesos:"+contadorQuesos);
-        scoreFont.draw(MainGame.batch, scoreLayout, 900, 690);
-        quesosFont.draw(MainGame.batch,quesosLayout,100,690);
+        scoreFont.draw(this.batch, scoreLayout, 900, 690);
+        quesosFont.draw(this.batch,quesosLayout,100,690);
 
         if (bgMusic.isLooping()) {
 
             for (Queso queso : quesos) {
-                queso.render(MainGame.batch);
+                queso.render(this.batch);
             }
 
 
             for (Disparo miau : grisacius.disparos) {
-                miau.render(MainGame.batch);
+                miau.render(this.batch);
             }
 
             for (Rata rata : ratas) {
-                rata.render(MainGame.batch);
+                rata.render(this.batch);
             }
 
-            grisacius.render(MainGame.batch);
-        }
-        if(contadorQuesos<=8){
-
-            this.dispose();
-            this.game.setScreen(new GameScreenPrimerBoss(this.game));
-
+            grisacius.render(this.batch);
         }
 
-        MainGame.batch.end();
+
+
+        this.batch.end();
 
 
     }
@@ -235,7 +257,10 @@ public class GameScreen implements Screen {
     public void resume() {
 
 
+
         for(int i=0;i<10;i++){
+
+
 
             posicionQuesos+=(Queso.ALTO_QUESO+40);
             quesos.add(new Queso(posicionQuesos));
@@ -255,6 +280,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        batch.dispose();
         bgMusic.dispose();
         fondoTexture.dispose();
         quesos.clear();

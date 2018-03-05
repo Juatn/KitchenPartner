@@ -45,6 +45,7 @@ public class Menu_Principal extends AppCompatActivity {
         rata=(ImageView)findViewById(R.id.imgrat);
 
 
+
         // continuamos la partida (por hacer)
         btnContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +101,7 @@ public class Menu_Principal extends AppCompatActivity {
     public void nuevaPartida(){
 
         Intent i = new Intent(getApplicationContext(), AndroidLauncher.class);
-        i.putExtra("Dificultad", dificultad);
+
 
 
         startActivity(i);

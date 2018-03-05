@@ -3,7 +3,9 @@ package com.mygdx.grisacius.Entidades.Escenario2;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.grisacius.Constantes;
 import com.mygdx.grisacius.Entidades.Grisacius;
 import com.mygdx.grisacius.Entidades.MoldeBoss;
@@ -24,12 +26,14 @@ public class Boss  implements MoldeBoss{
     public static int ALTO_BOSS = 400;
     public float x,y;
     public  Texture texture;
+    public Sprite spriteBoss;
     public CompruebaColisiones colision;
     public boolean remove= false;
-    public  int health=5000;
+    public static int VIDA_BOSS=5000;
     public Random posibilidad;
     public static int VELOCIDAD_BOSS=500;
     public ArrayList<Disparo_Boss> disparos=new ArrayList<Disparo_Boss>();
+
 
 
 
@@ -38,6 +42,10 @@ public class Boss  implements MoldeBoss{
         this.x = x;
         this.colision = new CompruebaColisiones(y, x, ALTO_BOSS, ANCHO_BOSS);
         this.posibilidad=new Random();
+        if (texture==null) {
+            texture = new Texture("imagenes/bossrat.png");
+        }
+        spriteBoss=new Sprite(texture);
 
 
 
@@ -46,9 +54,6 @@ public class Boss  implements MoldeBoss{
 
     public void update(float deltaTime, Grisacius grisacius){
 
-        if (health > 0) {
-            texture = new Texture("imagenes/bossrat.png");
-        }
 
         int aleatorio = posibilidad.nextInt(50);
 
@@ -65,6 +70,7 @@ public class Boss  implements MoldeBoss{
 
 
         if(posibilidad.nextBoolean()){
+
             sube(aleatorio,deltaTime);
             colision.mover(x, y);
         }
@@ -98,18 +104,18 @@ public class Boss  implements MoldeBoss{
 
     @Override
     public void loseHealth() {
-        health=health-100;
+        VIDA_BOSS=VIDA_BOSS-100;
         //System.out.print("pierde vida");
 
     }
 
     @Override
     public void winHealth() {
-        health=health+500;
+        VIDA_BOSS=VIDA_BOSS+500;
     }
     public void render(SpriteBatch batch) {
 
-        batch.draw(texture, x, y, ANCHO_BOSS, ALTO_BOSS);
+        batch.draw(spriteBoss, x, y, ANCHO_BOSS, ALTO_BOSS);
     }
 
     public void dispose(){

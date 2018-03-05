@@ -12,8 +12,8 @@ public class Disparo_Boss {
 
 
         private Texture texture;
-        public static  int ANCHO_DISPARO = 50;
-        public static  int ALTO_DISPARO = 50;
+        public static  int ANCHO_DISPARO = 80;
+        public static  int ALTO_DISPARO = 30;
         public static int VELOCIDAD_DISPARO_BOSS=800;
 
 
@@ -27,14 +27,15 @@ public class Disparo_Boss {
             this.colision = new CompruebaColisiones(x, y, ANCHO_DISPARO, ALTO_DISPARO);
 
             if (texture == null)
-                texture = new Texture("imagenes/disparo_boss.png");
+                texture = new Texture("imagenes/flecha.png");
         }
 
 
     public void update(float deltaTime) {
             x -= VELOCIDAD_DISPARO_BOSS * deltaTime;
-            if (x < 0)
+            if (x < 0){
                 remove = true;
+            }
 
 
             colision.mover(x, y);

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 
-import com.mygdx.grisacius.AndroidLauncher;
 import com.mygdx.grisacius.Constantes;
 import com.mygdx.grisacius.R;
 
@@ -30,6 +29,7 @@ public class Menu_Ajustes extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ajustes);
 
+
         // asignar variables
         ingles=(RadioButton) findViewById(R.id.radioIngles);
         castellano=(RadioButton) findViewById(R.id.radioCastellano);
@@ -37,6 +37,8 @@ public class Menu_Ajustes extends AppCompatActivity{
         media=(RadioButton) findViewById(R.id.radioMedia);
         dificil=(RadioButton) findViewById(R.id.radioDificil);
         btnGuardar=(Button)findViewById(R.id.btnGuardar);
+
+
 
 
         btnGuardar.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +50,8 @@ public class Menu_Ajustes extends AppCompatActivity{
 
 
                 startActivity(i);
+
+
 
 
 
