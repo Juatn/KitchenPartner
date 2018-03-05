@@ -10,26 +10,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.grisacius.Constantes;
 import com.mygdx.grisacius.Entidades.Escenario1.Disparo;
 import com.mygdx.grisacius.Entidades.Escenario1.Queso;
 import com.mygdx.grisacius.Entidades.Escenario1.Rata;
 import com.mygdx.grisacius.Entidades.Grisacius;
 import com.mygdx.grisacius.MainGame;
 import com.mygdx.grisacius.Tools.ScrollingBackground;
-import com.mygdx.grisacius.bdd.GrisaciusDataBase;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import static com.mygdx.grisacius.Constantes.ALTO_PANTALLA;
 import static com.mygdx.grisacius.Constantes.MAX_RATAS;
-import static com.mygdx.grisacius.Constantes.MAX_VELOCIDAD_RATA;
 import static com.mygdx.grisacius.Constantes.MIN_RATAS;
-import static com.mygdx.grisacius.Constantes.MIN_VELOCIDAD_RATA;
 import static com.mygdx.grisacius.Constantes.SCORE;
 import static com.mygdx.grisacius.Entidades.Escenario1.Rata.ALTO_RATA;
-import static com.mygdx.grisacius.Entidades.Grisacius.TIEMPO_DISPARO;
 import static com.mygdx.grisacius.MainGame.cam;
 
 /**
@@ -47,7 +42,7 @@ public class GameScreen implements Screen {
     protected float statetime;
     float ratSpawnTimer;
     ArrayList<Rata> ratas;
-    public static ArrayList<Queso>quesos;
+    public static ArrayList<Queso> quesos;
     protected ScrollingBackground fondo;
     protected Random random;
     public Music bgMusic;
@@ -67,20 +62,19 @@ public class GameScreen implements Screen {
         this.game = game;
 
 
-        posicionQuesos=30;
-        batch=new SpriteBatch();
+        posicionQuesos = 30;
+        batch = new SpriteBatch();
 
 
+        grisacius = new Grisacius();
+        contadorQuesos = 10;
+        fondoTexture = new Texture("imagenes/fondo.png");
+        fondo = new ScrollingBackground(fondoTexture);
+        quesosFont = new BitmapFont(Gdx.files.internal("score.fnt"));
 
-        grisacius=new Grisacius();
-        contadorQuesos=10;
-        fondoTexture=new Texture("imagenes/fondo.png");
-        fondo=new ScrollingBackground(fondoTexture);
-        quesosFont=new BitmapFont(Gdx.files.internal("score.fnt"));
-
-        quesos=new ArrayList<Queso>();
+        quesos = new ArrayList<Queso>();
         ratas = new ArrayList<Rata>();
-       random = new Random();
+        random = new Random();
         ratSpawnTimer = random.nextFloat() * (MAX_RATAS - MIN_RATAS) + MIN_RATAS;
 
         disparoTime = 0;
@@ -101,10 +95,9 @@ public class GameScreen implements Screen {
     public void show() {
 
 
+        for (int i = 0; i < 10; i++) {
 
-        for(int i=0;i<10;i++){
-
-            posicionQuesos+=(Queso.ALTO_QUESO+40);
+            posicionQuesos += (Queso.ALTO_QUESO + 40);
             quesos.add(new Queso(posicionQuesos));
 
 
@@ -117,7 +110,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         batch.setProjectionMatrix(cam.combined());
 
-        if(!bgMusic.isPlaying()){
+        if (!bgMusic.isPlaying()) {
             bgMusic.play();
         }
 
@@ -150,7 +143,6 @@ public class GameScreen implements Screen {
         }
 
 
-
         //COLISIONES
         for (Disparo miau : grisacius.disparos) {
             for (Rata rata : ratas) {
@@ -166,21 +158,18 @@ public class GameScreen implements Screen {
             }
         }
 
-        ArrayList<Queso>quesosEliminar=new ArrayList<Queso>();
-        for(Queso queso:quesos){
+        ArrayList<Queso> quesosEliminar = new ArrayList<Queso>();
+        for (Queso queso : quesos) {
             queso.update(delta);
-            for(Rata rata:ratas){
-                if(rata.getColision().chocadoCon(queso.getColision())){
-                   queso.setTexture(new Texture("imagenes/rataQueso.png"));
-                   ratasEliminar.add(rata);
-                   --contadorQuesos;
+            for (Rata rata : ratas) {
+                if (rata.getColision().chocadoCon(queso.getColision())) {
+                    queso.setTexture(new Texture("imagenes/rataQueso.png"));
+                    ratasEliminar.add(rata);
+                    --contadorQuesos;
 
                 }
             }
         }
-
-
-
 
 
         quesos.removeAll(quesosEliminar);
@@ -188,7 +177,7 @@ public class GameScreen implements Screen {
         ratas.removeAll(ratasEliminar);
 
         statetime += delta;
-        if(SCORE==100||SCORE==500){
+        if (SCORE == 100 || SCORE == 500) {
 
             this.dispose();
 
@@ -196,7 +185,7 @@ public class GameScreen implements Screen {
             this.game.setScreen(new GameScreenPrimerBoss(this.game));
 
         }
-        if(contadorQuesos<=0){
+        if (contadorQuesos <= 0) {
 
             this.dispose();
             this.game.setScreen(new GameOver(this.game));
@@ -211,9 +200,9 @@ public class GameScreen implements Screen {
         fondo.updateAndRender(delta, this.batch);
 
         GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "Score:" + SCORE);
-        GlyphLayout quesosLayout=new GlyphLayout(quesosFont,"Quesos:"+contadorQuesos);
+        GlyphLayout quesosLayout = new GlyphLayout(quesosFont, "Quesos:" + contadorQuesos);
         scoreFont.draw(this.batch, scoreLayout, 900, 690);
-        quesosFont.draw(this.batch,quesosLayout,100,690);
+        quesosFont.draw(this.batch, quesosLayout, 100, 690);
 
         if (bgMusic.isLooping()) {
 
@@ -234,13 +223,10 @@ public class GameScreen implements Screen {
         }
 
 
-
         this.batch.end();
 
 
     }
-
-
 
 
     @Override
@@ -257,18 +243,14 @@ public class GameScreen implements Screen {
     public void resume() {
 
 
-
-        for(int i=0;i<10;i++){
-
+        for (int i = 0; i < 10; i++) {
 
 
-            posicionQuesos+=(Queso.ALTO_QUESO+40);
+            posicionQuesos += (Queso.ALTO_QUESO + 40);
             quesos.add(new Queso(posicionQuesos));
 
 
         }
-
-
 
 
     }
@@ -289,8 +271,6 @@ public class GameScreen implements Screen {
         quesosFont.dispose();
 
     }
-
-
 
 
 }

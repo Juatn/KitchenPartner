@@ -10,11 +10,14 @@ import com.mygdx.grisacius.Tools.CompruebaColisiones;
 public interface MoldeRat {
 
     void update(float delta);
-    void render(SpriteBatch batch);
-    CompruebaColisiones getColision();
-    float getX();
-    float getY();
 
+    void render(SpriteBatch batch);
+
+    CompruebaColisiones getColision();
+
+    float getX();
+
+    float getY();
 
 
 }

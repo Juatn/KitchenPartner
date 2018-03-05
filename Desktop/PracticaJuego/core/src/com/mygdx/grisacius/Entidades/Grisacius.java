@@ -19,7 +19,7 @@ import static com.mygdx.grisacius.Constantes.ALTO_PANTALLA;
 
 public class Grisacius {
 
-        private static Texture texture;
+    private static Texture texture;
     public static int GRISACIUS_ANCHO_PIXEL = 32;
     public static int GRISACIUS_ALTO_PIXEL = 32;
     public static int GRISACIUS_ANCHO = GRISACIUS_ANCHO_PIXEL * 3;
@@ -27,66 +27,65 @@ public class Grisacius {
     public static float VELOCIDAD_GRISACIUS = 800;
     public static float TIEMPO_DISPARO = 0.3f;
     protected float disparoTime;
-    public static ArrayList<Disparo>disparos;
+    public static ArrayList<Disparo> disparos;
 
 
-        float x, y;
+    float x, y;
 
-        CompruebaColisiones colision;
-        public boolean remove = false;
-        public boolean haComido=false;
+    CompruebaColisiones colision;
+    public boolean remove = false;
+    public boolean haComido = false;
 
-        public Grisacius() {
-            this.y = ALTO_PANTALLA/2;
-            this.x = 80f;
-            disparos=new ArrayList<Disparo>();
-            this.colision = new CompruebaColisiones(y, x, GRISACIUS_ALTO, GRISACIUS_ANCHO);
+    public Grisacius() {
+        this.y = ALTO_PANTALLA / 2;
+        this.x = 80f;
+        disparos = new ArrayList<Disparo>();
+        this.colision = new CompruebaColisiones(y, x, GRISACIUS_ALTO, GRISACIUS_ANCHO);
 
-            if (texture == null)
-                texture = new Texture("imagenes/gato.png");
+        if (texture == null)
+            texture = new Texture("imagenes/gato.png");
+    }
+
+    public void update(float deltaTime) {
+        if (isUP()) {// ARRIBA
+            y += VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
+
+            if (y > ALTO_PANTALLA)
+                y = ALTO_PANTALLA - texture.getHeight();
         }
+        if (isDown()) {//ABAJO
+            y -= VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
 
-        public void update(float deltaTime) {
-            if (isUP()) {// ARRIBA
-                y += VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
+            if (y < 0)
+                y = 0;
+        }
+        disparoTime += deltaTime;
+        if ((this.isUP() || this.isDown()) && disparoTime >= TIEMPO_DISPARO) {
+            disparoTime = 0;
+            disparos.add(new Disparo(this.getY() + 0.5f));
 
-                if (y > ALTO_PANTALLA)
-                    y = ALTO_PANTALLA - texture.getHeight();
-            }
-            if (isDown()) {//ABAJO
-                y -= VELOCIDAD_GRISACIUS * Gdx.graphics.getDeltaTime();
-
-                if (y < 0)
-                    y = 0;
-            }
-            disparoTime += deltaTime;
-            if ((this.isUP() || this.isDown()) && disparoTime >= TIEMPO_DISPARO) {
-                disparoTime = 0;
-                disparos.add(new Disparo(this.getY() + 0.5f));
-
-            }
-
-
-
-            colision.mover(x, y);
         }
 
 
-        public void render(SpriteBatch batch) {
-            batch.draw(texture, x, y, GRISACIUS_ANCHO, GRISACIUS_ALTO);
-        }
+        colision.mover(x, y);
+    }
 
-        public CompruebaColisiones getColision() {
-            return colision;
-        }
 
-        public float getX() {
-            return x;
-        }
+    public void render(SpriteBatch batch) {
+        batch.draw(texture, x, y, GRISACIUS_ANCHO, GRISACIUS_ALTO);
+    }
 
-        public float getY() {
-            return y;
-        }
+    public CompruebaColisiones getColision() {
+        return colision;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
 
 
     public static boolean isUP() {

@@ -11,7 +11,7 @@ import static com.mygdx.grisacius.Entidades.Grisacius.TIEMPO_DISPARO;
 
 public class Constantes {
 
-    public static Random random=new Random();
+    public static Random random = new Random();
 
 
     //  JUEGO
@@ -20,7 +20,7 @@ public class Constantes {
     public static final int ALTO_PANTALLA = 720;
     public static float MIN_RATAS = 1f;
     public static float MAX_RATAS = 0.5f;
-    public static int SCORE=0;
+    public static int SCORE = 0;
 
 
     // GRISACIUS
@@ -31,14 +31,14 @@ public class Constantes {
     public static int DEFAULT_X = 65;
 
     //RATA
-    public static int MIN_VELOCIDAD_RATA=200;
-    public static int MAX_VELOCIDAD_RATA=600;
-    public static int VELOCIDAD_QUESO=200;
+    public static int MIN_VELOCIDAD_RATA = 200;
+    public static int MAX_VELOCIDAD_RATA = 600;
+    public static int VELOCIDAD_QUESO = 200;
 
     //GAME OVER
 
-    public static int MIN_EMPEZAR=200;
-    public static int MAX_TERMINAR=800;
+    public static int MIN_EMPEZAR = 200;
+    public static int MAX_TERMINAR = 800;
 
     // FONDO ANIMADO
     public static int VELOCIDAD_DEFECTO = 80;
@@ -50,11 +50,11 @@ public class Constantes {
         return ThreadLocalRandom.current().nextInt(min, max + 1);
     }
 
-    public static void dificultad(){
+    public static void dificultad() {
         MIN_RATAS -= 0.001f;
-        MIN_VELOCIDAD_RATA+=50f;
-        MAX_VELOCIDAD_RATA+=100f;
-        VELOCIDAD_QUESO+=50;
+        MIN_VELOCIDAD_RATA += 50f;
+        MAX_VELOCIDAD_RATA += 100f;
+        VELOCIDAD_QUESO += 50;
 
         TIEMPO_DISPARO -= 0.00001f;
     }

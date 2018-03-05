@@ -12,44 +12,44 @@ import static com.mygdx.grisacius.Constantes.VELOCIDAD_QUESO;
  */
 
 public class Queso {
-    public static int ALTO_QUESO=80;
-    public static int ANCHO_QUESO=80;
-    private  Texture texture;
-    public float x,y;
+    public static int ALTO_QUESO = 80;
+    public static int ANCHO_QUESO = 80;
+    private Texture texture;
+    public float x, y;
     public CompruebaColisiones colision;//
-    public boolean remove=false;
+    public boolean remove = false;
 
 
+    public Queso(float y) {
 
-    public Queso(float y){
-
-        this.x=1;
-        this.y=y;
+        this.x = 1;
+        this.y = y;
         this.colision = new CompruebaColisiones(y, x, ALTO_QUESO, ANCHO_QUESO);
         if (texture == null) {
             texture = new Texture("imagenes/cheese.png");
         }
     }
 
-    public void update(float deltaTime,Rata rat){
+    public void update(float deltaTime, Rata rat) {
 
         if (rat.getX() < -rat.ANCHO_RATA)
             remove = true;
-            rat.remove=true;
+        rat.remove = true;
     }
+
     public void update(float deltaTime) {
 
 
         y -= VELOCIDAD_QUESO * deltaTime;
-        if(y< 0){
-            y=ANCHO_PANTALLA;
+        if (y < 0) {
+            y = ANCHO_PANTALLA;
         }
 
 
         colision.mover(x, y);
     }
 
-    public  Texture getTexture() {
+    public Texture getTexture() {
         return texture;
     }
 

@@ -9,10 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.grisacius.Entidades.Intro.Grisacius_Intro;
-import com.mygdx.grisacius.MainGame;
-import com.mygdx.grisacius.Tools.GameCamera;
-
-import sun.applet.Main;
 
 import static com.mygdx.grisacius.MainGame.cam;
 
@@ -29,13 +25,13 @@ public class IntroScreen implements Screen {
     private BitmapFont intro;
     public SpriteBatch batch;
 
-    public IntroScreen(Game game){
-        batch=new SpriteBatch();
-        this.game=game;
-        grisacius=new Grisacius_Intro(200);
-        introMusic= Gdx.audio.newMusic(Gdx.files.internal("music/introMusic.mp3"));
-        intro=new BitmapFont(Gdx.files.internal("score.fnt"));
-        fondo=new Texture("imagenes/intro.png");
+    public IntroScreen(Game game) {
+        batch = new SpriteBatch();
+        this.game = game;
+        grisacius = new Grisacius_Intro(200);
+        introMusic = Gdx.audio.newMusic(Gdx.files.internal("music/introMusic.mp3"));
+        intro = new BitmapFont(Gdx.files.internal("score.fnt"));
+        fondo = new Texture("imagenes/intro.png");
 
 
     }
@@ -52,7 +48,7 @@ public class IntroScreen implements Screen {
         batch.setProjectionMatrix(cam.combined());
         grisacius.update(delta);
 
-        if(! introMusic.isPlaying()){
+        if (!introMusic.isPlaying()) {
             this.dispose();
 
             this.game.setScreen(new GameScreen(this.game));
@@ -63,7 +59,7 @@ public class IntroScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.batch.begin();
 
-        this.batch.draw(fondo,0,0);
+        this.batch.draw(fondo, 0, 0);
         grisacius.render(this.batch);
         this.batch.end();
 

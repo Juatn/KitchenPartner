@@ -7,8 +7,8 @@ package com.mygdx.grisacius.Entidades;
 public interface MoldeBoss {
 
     void loseHealth();
-    void winHealth();
 
+    void winHealth();
 
 
 }

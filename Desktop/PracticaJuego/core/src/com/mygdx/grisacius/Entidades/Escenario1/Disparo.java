@@ -15,10 +15,9 @@ import static com.mygdx.grisacius.Constantes.VELOCIDAD_DISPARO;
 public class Disparo {
 
 
-    private  Texture texture;
-    public  int ANCHO_DISPARO = 40;
-    public  int ALTO_DISPARO = 50;
-
+    private Texture texture;
+    public int ANCHO_DISPARO = 40;
+    public int ALTO_DISPARO = 50;
 
 
     float x, y;

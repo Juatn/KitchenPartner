@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,8 +15,6 @@ import com.mygdx.grisacius.Entidades.Escenario2.Boss;
 import com.mygdx.grisacius.Entidades.Escenario2.Disparo_Boss;
 import com.mygdx.grisacius.Entidades.Escenario2.Vida;
 import com.mygdx.grisacius.Entidades.Grisacius;
-import com.mygdx.grisacius.MainGame;
-
 
 import java.util.ArrayList;
 
@@ -37,26 +34,26 @@ public class GameScreenPrimerBoss implements Screen {
     public SpriteBatch batch;
     GlyphLayout vidaLayout;
 
-    private ArrayList<Vida>vidas=new ArrayList<Vida>();
+    private ArrayList<Vida> vidas = new ArrayList<Vida>();
     public int posicionVida;
     protected BitmapFont vidafont;
 
     public Music musicBoss;
 
 
-    public GameScreenPrimerBoss(Game game){
-        batch=new SpriteBatch();
+    public GameScreenPrimerBoss(Game game) {
+        batch = new SpriteBatch();
 
-        vidafont=new BitmapFont(Gdx.files.internal("score.fnt"));
+        vidafont = new BitmapFont(Gdx.files.internal("score.fnt"));
 
-        musicBoss= Gdx.audio.newMusic(Gdx.files.internal("music/loopbossmusic.mp3"));
-        background=new Texture("imagenes/fondoscene2.png");
+        musicBoss = Gdx.audio.newMusic(Gdx.files.internal("music/loopbossmusic.mp3"));
+        background = new Texture("imagenes/fondoscene2.png");
 
 
-        grisacius=new Grisacius();
-        jefe=new Boss(Constantes.ANCHO_PANTALLA-250);
-        posicionVida=30;
-        this.game=game;
+        grisacius = new Grisacius();
+        jefe = new Boss(Constantes.ANCHO_PANTALLA - 250);
+        posicionVida = 30;
+        this.game = game;
         colocarVidas();
     }
 
@@ -74,17 +71,17 @@ public class GameScreenPrimerBoss implements Screen {
     public void render(float delta) {
 
         grisacius.update(delta);
-        jefe.update(delta,this.grisacius);
+        jefe.update(delta, this.grisacius);
 
         batch.setProjectionMatrix(cam.combined());
 
 
         //UPDATE DISPARO BOSS
-        ArrayList<Disparo_Boss>disparosEliminar=new ArrayList<Disparo_Boss>();
+        ArrayList<Disparo_Boss> disparosEliminar = new ArrayList<Disparo_Boss>();
 
-        for(Disparo_Boss x:jefe.disparos){
+        for (Disparo_Boss x : jefe.disparos) {
             x.update(delta);
-            if(x.remove){
+            if (x.remove) {
                 disparosEliminar.add(x);
                 System.out.print("eliminado");
             }
@@ -102,43 +99,36 @@ public class GameScreenPrimerBoss implements Screen {
         // COLISION  disparo jefe
         for (Disparo miau : grisacius.disparos) {
 
-                if (miau.getColision().chocadoCon(jefe.getColision())) {
+            if (miau.getColision().chocadoCon(jefe.getColision())) {
 
-                    System.out.print("asd");
-                    disparosDel.add(miau);
-
-
+                System.out.print("asd");
+                disparosDel.add(miau);
 
 
-
-                       jefe.loseHealth();
-                                   }
-
+                jefe.loseHealth();
             }
-
-            // colision disparos jefe
-
-
-            for(Disparo_Boss c:jefe.disparos)
-
-                {
-                    if (c.getColision().chocadoCon(grisacius.getColision())&&!vidas.isEmpty()) {
-
-                        c.remove=true;
-                        vidas.remove(vidas.size()-1);
-                        jefe.winHealth();
-                    }
-
-
-
-            }
-        if(vidas.isEmpty()){
-            this.game.setScreen(new GameOver(game));
 
         }
 
+        // colision disparos jefe
 
 
+        for (Disparo_Boss c : jefe.disparos)
+
+        {
+            if (c.getColision().chocadoCon(grisacius.getColision()) && !vidas.isEmpty()) {
+
+                c.remove = true;
+                vidas.remove(vidas.size() - 1);
+                jefe.winHealth();
+            }
+
+
+        }
+        if (vidas.isEmpty()) {
+            this.game.setScreen(new GameOver(game));
+
+        }
 
 
         jefe.disparos.removeAll(disparosEliminar);
@@ -150,36 +140,32 @@ public class GameScreenPrimerBoss implements Screen {
         this.batch.begin();
 
 
-        this.batch.draw(background,0,0);
-         vidaLayout=new GlyphLayout(vidafont,"Vida:"+VIDA_BOSS);
+        this.batch.draw(background, 0, 0);
+        vidaLayout = new GlyphLayout(vidafont, "Vida:" + VIDA_BOSS);
         vidafont.draw(this.batch, vidaLayout, 50, 50);
 
-        for(Vida c:vidas){
+        for (Vida c : vidas) {
             c.render(this.batch);
         }
-            jefe.render(this.batch);
-            grisacius.render(this.batch);
-            for(Disparo_Boss c:jefe.disparos){
-                c.render(this.batch);
-            }
-            for(Disparo x:grisacius.disparos){
-                x.render(this.batch);
-            }
+        jefe.render(this.batch);
+        grisacius.render(this.batch);
+        for (Disparo_Boss c : jefe.disparos) {
+            c.render(this.batch);
+        }
+        for (Disparo x : grisacius.disparos) {
+            x.render(this.batch);
+        }
 
-        if(VIDA_BOSS<=0){
+        if (VIDA_BOSS <= 0) {
 
-            VIDA_BOSS=5000;
-            Constantes.SCORE+=5;
+            VIDA_BOSS = 5000;
+            Constantes.SCORE += 5;
             Constantes.dificultad();
             this.dispose();
             this.game.setScreen(new GameScreen(this.game));
 
 
-
         }
-
-
-
 
 
         this.batch.end();
@@ -230,10 +216,11 @@ public class GameScreenPrimerBoss implements Screen {
         vidaLayout.reset();
 
     }
-    public void colocarVidas(){
-        for(int i=0;i<7;i++){
 
-            posicionVida+=(Vida.ANCHO_VIDA+8);
+    public void colocarVidas() {
+        for (int i = 0; i < 7; i++) {
+
+            posicionVida += (Vida.ANCHO_VIDA + 8);
             vidas.add(new Vida(posicionVida));
 
 

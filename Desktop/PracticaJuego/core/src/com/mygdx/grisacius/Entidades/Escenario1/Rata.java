@@ -17,7 +17,7 @@ import static com.mygdx.grisacius.Constantes.getInt;
 
 //p
 
-public class Rata implements MoldeRat{
+public class Rata implements MoldeRat {
 
 
     private static Texture texture;
@@ -29,12 +29,12 @@ public class Rata implements MoldeRat{
 
     CompruebaColisiones colision;
     public boolean remove = false;
-    public boolean haComido=false;
+    public boolean haComido = false;
 
     public Rata(float y) {
         this.y = y;
         this.x = ANCHO_PANTALLA;
-        velocidad=getInt(MIN_VELOCIDAD_RATA,MAX_VELOCIDAD_RATA);
+        velocidad = getInt(MIN_VELOCIDAD_RATA, MAX_VELOCIDAD_RATA);
         this.colision = new CompruebaColisiones(y, x, ALTO_RATA, ANCHO_RATA);
 
         if (texture == null)
@@ -43,10 +43,9 @@ public class Rata implements MoldeRat{
 
     public void update(float deltaTime) {
         x -= velocidad * deltaTime;
-        if (x < -ANCHO_RATA){
+        if (x < -ANCHO_RATA) {
             remove = true;
         }
-
 
 
         colision.mover(x, y);
