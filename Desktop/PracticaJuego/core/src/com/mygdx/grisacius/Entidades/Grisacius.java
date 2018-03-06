@@ -62,7 +62,7 @@ public class Grisacius {
         disparoTime += deltaTime;
         if ((this.isUP() || this.isDown()) && disparoTime >= TIEMPO_DISPARO) {
             disparoTime = 0;
-            disparos.add(new Disparo(this.getY() + 0.5f));
+            disparos.add(new Disparo(this.getY() + 0.6f));
 
         }
 

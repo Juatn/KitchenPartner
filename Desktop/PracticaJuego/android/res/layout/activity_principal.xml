@@ -13,18 +13,19 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="392dp"
+            android:layout_width="439dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
 
+            android:contentDescription="TODO"
             android:src="@drawable/logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.388"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" android:contentDescription="TODO" />
+            app:layout_constraintVertical_bias="0.0" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -38,14 +39,14 @@
             android:layout_height="15dp" />
 
         <Button
-            android:id="@+id/btnContinuar"
+            android:id="@+id/btnTopScores"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
             android:background="@android:drawable/button_onoff_indicator_on"
             android:backgroundTint="@color/azulBoton"
-            android:text="@string/continuar" />
+            android:text="@string/topscore" />
 
         <Space
             android:layout_width="match_parent"

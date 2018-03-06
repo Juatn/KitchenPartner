@@ -4,7 +4,7 @@
 
     <string name="app_name">Grisacius vs Rats</string>
 
-    <string name="continuar">Continuar</string>
+    <string name="topscore">Top Scores</string>
 
     <string name="ajustes">Ajustes</string>
     <string name="nueva_partida">Nueva Partida</string>
@@ -12,6 +12,8 @@
     <string name="todo">TODO</string>
 
     <string name="idioma">Idioma</string>
+    <string name="volver_menu">volver menu</string>
+
 
 
 </resources>

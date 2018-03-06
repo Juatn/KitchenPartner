@@ -31,7 +31,7 @@ public class Boss  implements MoldeBoss{
     public boolean remove= false;
     public static int VIDA_BOSS=5000;
     public Random posibilidad;
-    public static int VELOCIDAD_BOSS=500;
+    public static int VELOCIDAD_BOSS=450;
     public ArrayList<Disparo_Boss> disparos=new ArrayList<Disparo_Boss>();
 
 
@@ -59,7 +59,7 @@ public class Boss  implements MoldeBoss{
 
 
 
-        if(aleatorio==25) {
+        if(aleatorio==25||aleatorio==30) {
 
             disparos.add(new Disparo_Boss(this));
 

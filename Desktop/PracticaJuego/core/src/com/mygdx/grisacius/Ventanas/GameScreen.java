@@ -24,8 +24,10 @@ import static com.mygdx.grisacius.Constantes.ALTO_PANTALLA;
 import static com.mygdx.grisacius.Constantes.MAX_RATAS;
 import static com.mygdx.grisacius.Constantes.MIN_RATAS;
 import static com.mygdx.grisacius.Constantes.SCORE;
+import static com.mygdx.grisacius.Constantes.dificultad;
 import static com.mygdx.grisacius.Entidades.Escenario1.Rata.ALTO_RATA;
 import static com.mygdx.grisacius.MainGame.cam;
+import static com.mygdx.grisacius.MainGame.dataBase;
 
 /**
  * Created by juana on 29/01/2018.
@@ -97,8 +99,9 @@ public class GameScreen implements Screen {
 
         for (int i = 0; i < 10; i++) {
 
-            posicionQuesos += (Queso.ALTO_QUESO + 40);
             quesos.add(new Queso(posicionQuesos));
+            posicionQuesos += (Queso.ALTO_QUESO + 40);
+
 
 
         }
@@ -154,17 +157,19 @@ public class GameScreen implements Screen {
                     MainGame.dataBase.saveCurrentGame(SCORE);
 
 
+
                 }
             }
         }
 
-        ArrayList<Queso> quesosEliminar = new ArrayList<Queso>();
+
         for (Queso queso : quesos) {
             queso.update(delta);
             for (Rata rata : ratas) {
                 if (rata.getColision().chocadoCon(queso.getColision())) {
-                    queso.setTexture(new Texture("imagenes/rataQueso.png"));
                     ratasEliminar.add(rata);
+                    queso.setTexture(new Texture("imagenes/rataQueso.png"));
+
                     --contadorQuesos;
 
                 }
@@ -172,12 +177,19 @@ public class GameScreen implements Screen {
         }
 
 
-        quesos.removeAll(quesosEliminar);
+
         grisacius.disparos.removeAll(disparosEliminar);
         ratas.removeAll(ratasEliminar);
 
         statetime += delta;
-        if (SCORE == 100 || SCORE == 500) {
+
+        if (SCORE == 100 || SCORE == 200 || SCORE == 400 || SCORE == 600 || SCORE == 800 || SCORE == 1000 || SCORE == 1300 || SCORE == 1500||SCORE==1800) {
+            dificultad();
+            SCORE+=5;
+
+        }
+
+        if (SCORE == 2000) {
 
             this.dispose();
 
@@ -189,6 +201,7 @@ public class GameScreen implements Screen {
 
             this.dispose();
             this.game.setScreen(new GameOver(this.game));
+
 
         }
 

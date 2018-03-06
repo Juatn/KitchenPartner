@@ -160,7 +160,7 @@ public class GameScreenPrimerBoss implements Screen {
 
             VIDA_BOSS = 5000;
             Constantes.SCORE += 5;
-            Constantes.dificultad();
+
             this.dispose();
             this.game.setScreen(new GameScreen(this.game));
 

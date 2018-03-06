@@ -24,6 +24,11 @@
 
         </activity>
         <activity
+            android:name=".vistas.Menu_TopScores"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
             android:name="com.mygdx.grisacius.AndroidLauncher"
                        android:screenOrientation="landscape">
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize">

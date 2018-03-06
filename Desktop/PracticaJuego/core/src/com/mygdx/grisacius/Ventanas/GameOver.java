@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.grisacius.Constantes;
 import com.mygdx.grisacius.Entidades.GameOver.Rata_Over;
 
+import static com.mygdx.grisacius.Constantes.SCORE;
 import static com.mygdx.grisacius.MainGame.cam;
 import static com.mygdx.grisacius.MainGame.dataBase;
 
@@ -33,7 +34,9 @@ public class GameOver implements Screen {
         gameoverMusic = Gdx.audio.newMusic(Gdx.files.internal("music/gameover.mp3"));
         fondo = new Texture("imagenes/gameover.png");
         rata = new Rata_Over(50);
-        Constantes.SCORE = 0;
+        dataBase.endCurrentGame(SCORE);
+        gameoverMusic.play();
+
         this.game = game;
     }
 
@@ -41,25 +44,27 @@ public class GameOver implements Screen {
     @Override
     public void show() {
 
-        gameoverMusic.play();
-        dataBase.endCurrentGame(Constantes.SCORE);
+
+
     }
 
     @Override
     public void render(float delta) {
 
         batch.setProjectionMatrix(cam.combined());
-        rata.update(delta);
+
         Gdx.gl.glClearColor(0.1f, 0.4f, 0.6f, 0.8f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.batch.begin();
         this.batch.draw(fondo, 0, 0);
+        rata.update(delta);
         rata.render(this.batch);
         this.batch.end();
 
-        if (Gdx.input.isTouched()) {
+        if(!gameoverMusic.isPlaying()){
             this.dispose();
         }
+
 
 
     }
@@ -79,7 +84,7 @@ public class GameOver implements Screen {
 
         fondo.getTextureData();
         rata = new Rata_Over(50);
-        Constantes.SCORE = 0;
+
 
     }
 
@@ -93,7 +98,7 @@ public class GameOver implements Screen {
         batch.dispose();
         gameoverMusic.dispose();
         fondo.dispose();
-        rata.dispose();
+
 
 
     }

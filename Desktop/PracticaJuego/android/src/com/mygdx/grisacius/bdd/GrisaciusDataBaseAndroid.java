@@ -75,9 +75,7 @@ public class GrisaciusDataBaseAndroid extends GrisaciusDataBase {
         String[] fields = {getStartdateFieldName(), getScoreFieldName(), getEnddateFieldName()};
         Cursor c = database.query(getScoreTablename(), fields, getEnddateFieldName() + " is not null", null, null, null, getScoreFieldName() + " DESC", "3");
         //Si son menos de tres, no vale la pena obtenerlos.
-        if (c.getCount() < 3) {
-            return null;
-        }
+
         //Sabemos que solo debería haber una partida en curso.
         c.moveToFirst();
 

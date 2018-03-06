@@ -53,7 +53,7 @@ public class Constantes {
     public static void dificultad() {
         MIN_RATAS -= 0.001f;
         MIN_VELOCIDAD_RATA += 50f;
-        MAX_VELOCIDAD_RATA += 100f;
+        MAX_VELOCIDAD_RATA += 50f;
         VELOCIDAD_QUESO += 50;
 
         TIEMPO_DISPARO -= 0.00001f;
