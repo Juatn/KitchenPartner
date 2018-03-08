@@ -38,6 +38,8 @@ public class GameOver implements Screen {
         gameoverMusic.play();
 
         this.game = game;
+
+
     }
 
 
@@ -61,9 +63,7 @@ public class GameOver implements Screen {
         rata.render(this.batch);
         this.batch.end();
 
-        if(!gameoverMusic.isPlaying()){
-            this.dispose();
-        }
+
 
 
 

@@ -21,7 +21,7 @@ public class Rata implements MoldeRat {
 
 
     private static Texture texture;
-    public static int ANCHO_RATA = 100;
+    private static int ANCHO_RATA = 100;
     public static int ALTO_RATA = 100;
     public float x, y;
     public int velocidad;

@@ -12,19 +12,21 @@ import static com.mygdx.grisacius.Constantes.VELOCIDAD_QUESO;
  */
 
 public class Queso {
-    public static int ALTO_QUESO = 80;
-    public static int ANCHO_QUESO = 80;
+    //Atributos de clase
+    private int alto_queso = 80;
+    private int ancho_queso = 80;
     private Texture texture;
     public float x, y;
     public CompruebaColisiones colision;//
     public boolean remove = false;
 
+    // Constructor
 
     public Queso(float y) {
 
         this.x = 1;
         this.y = y;
-        this.colision = new CompruebaColisiones(y, x, ALTO_QUESO, ANCHO_QUESO);
+        this.colision = new CompruebaColisiones(y, x, ancho_queso, alto_queso);
         if (texture == null) {
             texture = new Texture("imagenes/cheese.png");
         }
@@ -58,7 +60,7 @@ public class Queso {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, x, y, ANCHO_QUESO, ALTO_QUESO);
+        batch.draw(texture, x, y, ancho_queso, alto_queso);
     }
 
     public float getX() {
