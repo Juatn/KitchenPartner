@@ -6,40 +6,40 @@ package com.example.juan.kitchenpartner.modelo;
 
 public class Usuario {
 
-    private int idUsuario;
-    private String nombre;
-    private String password;
-    private String correo;
+    private String s_id_usuario;
+    private String s_nombre;
+    private String s_password;
+    private String s_correo;
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public String getS_id_usuario() {
+        return s_id_usuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setS_id_usuario(String s_id_usuario) {
+        this.s_id_usuario = s_id_usuario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getS_nombre() {
+        return s_nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setS_nombre(String s_nombre) {
+        this.s_nombre = s_nombre;
     }
 
-    public String getPassword() {
-        return password;
+    public String getS_password() {
+        return s_password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setS_password(String s_password) {
+        this.s_password = s_password;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getS_correo() {
+        return s_correo;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setS_correo(String s_correo) {
+        this.s_correo = s_correo;
     }
 }
